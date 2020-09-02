@@ -64,6 +64,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-SIFT_SURT_Setting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/02/SIFT_SURT_Setting/" class="article-date">
+  <time datetime="2020-09-02T14:02:09.837Z" itemprop="datePublished">2020-09-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2020/09/02</p>
+<p>[TOC]</p>
+<h2 id="Win10-Anaconda3-PyCharm2020-1-4重新配置OpenCV以使用SIFT和SURF算法（个人笔记）"><a href="#Win10-Anaconda3-PyCharm2020-1-4重新配置OpenCV以使用SIFT和SURF算法（个人笔记）" class="headerlink" title="Win10+Anaconda3+PyCharm2020.1.4重新配置OpenCV以使用SIFT和SURF算法（个人笔记）"></a>Win10+Anaconda3+PyCharm2020.1.4重新配置OpenCV以使用SIFT和SURF算法（个人笔记）</h2><p>​        前两天看机器学习，一次测试样例的时候代码跑不了，查了一下发现是SIFT和SURF算法是被申请了专利的，在OpenCV2.x版本中，放在nofree中，而3.x版本开始，这些方法被放入了opencv_contrib中，如果想使用需要<strong>自己编译到OpenCV中</strong>。</p>
+<h4 id="先说失败的尝试："><a href="#先说失败的尝试：" class="headerlink" title="先说失败的尝试："></a>先说失败的尝试：</h4><p>​        看了网上的很多教程后，先查看自己的Python版本，原来Anaconda里用的是Python3.8.3，但是教程要<strong>下载opencv-contrib-python已编译的.whl文件</strong>网站中<a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv">Python的Windows扩展包网站</a>找到的只有对应Python35的版本。（虽然失败了，但这个网站里的文件还是挺有用的）</p>
+<img src="https://img-blog.csdnimg.cn/20200902215042148.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpX3l1MzgxNg==,size_16,color_FFFFFF,t_70#pic_center" alt="要下载的文件" style="zoom:65%;" />
+
+<p>​        那么就用<strong>conda创建新环境</strong>吧：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">在Anaconda Prompt中创建虚拟环境</span><br><span class="line">conda create --name py35 python&#x3D;3.5</span><br><span class="line">激活环境</span><br><span class="line">activate py35</span><br></pre></td></tr></table></figure>
+
+<p>​         <strong>接着在同一cmd中，安装下好的.whl文件（注意目标文件的位置）：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install G:&#x2F;opencv_python-4.1.2+contrib-cp35-cp35m-win_amd64.whl</span><br></pre></td></tr></table></figure>
+
+<p>​         这是网上的教程用来成功的办法，但我并没有，所以——</p>
+<h4 id="成功的办法："><a href="#成功的办法：" class="headerlink" title="成功的办法："></a>成功的办法：</h4><p>​         首先，activate py35并在里面<strong>pip uninstall opencv-python</strong>。</p>
+<p>​         然后，用中科大的源直接下载重装opencv（清华源试过了，不知为什么没有效果）：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200902215055772.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpX3l1MzgxNg==,size_16,color_FFFFFF,t_70#pic_center" alt="通过中科大的源下载"></p>
+<p>​        <strong>方法简单粗暴，效果显而易见</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20200902220314406.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FpX3l1MzgxNg==,size_16,color_FFFFFF,t_70#pic_center" alt="结果"></p>
+<p><strong>————The End————</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiyu3816.github.io/2020/09/02/SIFT_SURT_Setting/" data-id="ckelgj36p0002j0sfci6d6g5r" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-C++Big_int" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/08/31/C++Big_int/" class="article-date">
@@ -86,7 +131,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/08/31/C++Big_int/" data-id="ckeilx2l30000zwsfh2oz5ao2" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/08/31/C++Big_int/" data-id="ckelgj36k0000j0sf7qbx86ay" class="article-share-link">Share</a>
       
       
     </footer>
@@ -135,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/08/31/hello-world/" data-id="ckeilx2ld0001zwsf62wpc82b" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/08/31/hello-world/" data-id="ckelgj36o0001j0sf8mh6gl4x" class="article-share-link">Share</a>
       
       
     </footer>
@@ -163,7 +208,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
     </div>
   </div>
 
@@ -174,6 +219,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2020/09/02/SIFT_SURT_Setting/">(no title)</a>
+          </li>
         
           <li>
             <a href="/2020/08/31/C++Big_int/">(no title)</a>
