@@ -15,7 +15,7 @@
 <meta property="og:description" content="2020\10\07 OpenCV3 + C++ 实现在窗口中生成一点根据卡尔曼算法追踪鼠标的移动（个人笔记）​    这是WMJ考核的第一次任务之一，在提交的学习报告中解释非常粗糙，这里按照自己的理解详细记录。 卡尔曼算法原理​    卡尔曼滤波器cv::KalmanFilter是一个估计器，被估计的系统本身须有两个假设才能使用：  只有某些种类的状态（可以用向量表示）可以用卡尔曼滤波器处理；">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-10-07T13:03:31.050Z">
-<meta property="article:modified_time" content="2020-10-09T07:16:42.964Z">
+<meta property="article:modified_time" content="2020-10-09T07:19:13.460Z">
 <meta property="article:author" content="qiyu3816">
 <meta name="twitter:card" content="summary">
   
@@ -108,7 +108,9 @@
 <li><p>在标量卡尔曼滤波中，比如测量值是温度、湿度，一般认为下一个时刻该温度或者湿度维持不变，这种情况下状态转移矩阵通常就是标量1（单位矩阵）。</p>
 </li>
 <li><p>在导航和目标跟踪中卡尔曼滤波常被用来做位置估计，比如匀速直线运动和匀加速直线运动，x和y方向上的运动就被微分近似为匀速直线运动，如下：</p>
-<script type="math/tex; mode=display">\begin{bmatrix}1,0,\Delta t,0\\ 0,1,0,\Delta t\\ 0,0,1,0\\ 0,0,0,1\end{bmatrix}$$ $$\begin{bmatrix}1,\Delta t,\cfrac{\Delta t^2}{2} \\ 0,1,0 \\ 0,0,1\end{bmatrix}</script></li>
+<script type="math/tex; mode=display">
+\begin{bmatrix}1,0,\Delta t,0\\ 0,1,0,\Delta t\\ 0,0,1,0\\ 0,0,0,1\end{bmatrix}
+\begin{bmatrix}1,\Delta t,\cfrac{\Delta t^2}{2} \\ 0,1,0 \\ 0,0,1\end{bmatrix}</script></li>
 </ol>
 <p>​        $\pmb B$ 是控制变量矩阵，表示控制变量转换到当前预测值的方式，即<em>KalmanFilter.controlMatrix</em>，类型Mat(n×g)。</p>
 <p>​        $\widehat P_{k-1}$ 是上一轮的协方差矩阵，反映的是状态向量中各变量间的相关度，故也为对称矩阵即<em>KalmanFilter.errorCovPost</em>，类型Mat(n×n)。</p>
@@ -137,7 +139,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/10/07/KalmanMouseTrack/" data-id="ckg1x2rzo0001iwsfb8bgfgep" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/10/07/KalmanMouseTrack/" data-id="ckg1x5t900001xcsf1142g86k" class="article-share-link">Share</a>
       
       
     </footer>
