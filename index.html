@@ -106,8 +106,7 @@
 <li><p>在标量卡尔曼滤波中，比如测量值是温度、湿度，一般认为下一个时刻该温度或者湿度维持不变，这种情况下状态转移矩阵通常就是标量1（单位矩阵）。</p>
 </li>
 <li><p>在导航和目标跟踪中卡尔曼滤波常被用来做位置估计，比如匀速直线运动和匀加速直线运动，x和y方向上的运动就被微分近似为匀速直线运动，如下：</p>
-<p>$\begin{bmatrix}1,0,\Delta t,0\ 0,1,0,\Delta t\ 0,0,1,0\ 0,0,0,1\end{bmatrix}$ $\begin{bmatrix}1,\Delta t,\cfrac{\Delta t^2}{2} \ 0,1,0 \ 0,0,1\end{bmatrix}$</p>
-</li>
+<script type="math/tex; mode=display">\begin{bmatrix}1,0,\Delta t,0\\ 0,1,0,\Delta t\\ 0,0,1,0\\ 0,0,0,1\end{bmatrix}$$ $$\begin{bmatrix}1,\Delta t,\cfrac{\Delta t^2}{2} \\ 0,1,0 \\ 0,0,1\end{bmatrix}</script></li>
 </ol>
 <p>​        $\pmb B$ 是控制变量矩阵，表示控制变量转换到当前预测值的方式，即<em>KalmanFilter.controlMatrix</em>，类型Mat(n×g)。</p>
 <p>​        $\widehat P_{k-1}$ 是上一轮的协方差矩阵，反映的是状态向量中各变量间的相关度，故也为对称矩阵即<em>KalmanFilter.errorCovPost</em>，类型Mat(n×n)。</p>
@@ -136,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/10/07/KalmanMouseTrack/" data-id="ckg1wxpp30000p8sf12o2effy" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/10/07/KalmanMouseTrack/" data-id="ckg1x2rzo0001iwsfb8bgfgep" class="article-share-link">Share</a>
       
       
     </footer>
@@ -181,8 +180,8 @@
 <h3 id="coef-和intercept"><a href="#coef-和intercept" class="headerlink" title="coef_ 和intercept_"></a>coef_ 和intercept_</h3><p>对于线性回归和逻辑回归，其目标函数为：</p>
 <script type="math/tex; mode=display">
 g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
-<p>coef_ 就是$w_1到w_n$;</p>
-<p>intercept_ 就是$w_0$。</p>
+<p>coef_ 就是 $w_1$ 到 $w_n$ ;</p>
+<p>intercept_ 就是 $w_0$ 。</p>
 <p>这三个小知识点的代码源：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用线性回归预测菠菜: 2020年天猫双十一国际狂欢节的交易额</span></span><br><span class="line"></span><br><span class="line">data = pd.read_csv(<span class="string">&quot;bocai.csv&quot;</span>) <span class="comment"># 首先, 读取.csv文件</span></span><br><span class="line">data.head()</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">4</span>))</span><br><span class="line">plt.scatter(data[<span class="string">&#x27;year&#x27;</span>], data[<span class="string">&#x27;index&#x27;</span>], c=<span class="string">&#x27;red&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;years&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;indexes&quot;</span>)</span><br><span class="line"></span><br><span class="line">X = data[<span class="string">&#x27;year&#x27;</span>].values.reshape(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">y = data[<span class="string">&#x27;index&#x27;</span>].values.reshape(<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">reg = linear_model.LinearRegression()</span><br><span class="line">reg.fit(X, y)</span><br><span class="line"></span><br><span class="line">print(<span class="string">&#x27;a = &#123;:.5&#125;&#x27;</span>.format(reg.coef_[<span class="number">0</span>][<span class="number">0</span>]))</span><br><span class="line">print(<span class="string">&#x27;b = &#123;:.5&#125;&#x27;</span>.format(reg.intercept_[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;线性模型为: Y = &#123;:.5&#125;X + &#123;:.5&#125; &quot;</span>.format(reg.coef_[<span class="number">0</span>][<span class="number">0</span>], reg.intercept_[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line">predictions = reg.predict([[<span class="number">2020</span>],</span><br><span class="line">                           [<span class="number">2021</span>],</span><br><span class="line">                           [<span class="number">2022</span>]])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    print(<span class="string">&#x27;第&#123;&#125;年, 预计的销售额为&#123;:.5&#125;亿&#x27;</span>.format(i + <span class="number">2020</span>, predictions[i][<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line">plt.show()</span><br><span class="line">pylab.show()</span><br></pre></td></tr></table></figure>
 <p>输出结果：</p>
@@ -192,7 +191,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/09/10/sklearn_snippet/" data-id="ckg1wxppd0004p8sfexgjdi39" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/09/10/sklearn_snippet/" data-id="ckg1x2rzr0004iwsfay8b9ne3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -242,7 +241,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/09/04/Python-Spider/" data-id="ckg1wxppa0003p8sf0v6t4qd5" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/09/04/Python-Spider/" data-id="ckg1x2rzp0002iwsf63tn88ty" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,7 +293,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/09/02/SIFT_SURT_Setting/" data-id="ckg1wxpp90002p8sf8ecwh35y" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/09/02/SIFT_SURT_Setting/" data-id="ckg1x2rzq0003iwsf9wxv1r6x" class="article-share-link">Share</a>
       
       
     </footer>
@@ -334,7 +333,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/08/31/C++Big_int/" data-id="ckg1wxpp80001p8sf10er0q8n" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/08/31/C++Big_int/" data-id="ckg1x2rzj0000iwsf7eji3zgt" class="article-share-link">Share</a>
       
       
     </footer>
