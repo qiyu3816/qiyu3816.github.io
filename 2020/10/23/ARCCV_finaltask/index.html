@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>WMJ考核finaltask学习报告 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="2020\10\15 WMJ视觉组考核finaltask学习报告（个人笔记）CMake 进阶 find_package的原理。find_package用来查找依赖包。查找方式有Module模式（basic signature）和Config模式（full signature），前者是基础，后者更高级且复杂。当find_package()中指定CONFIG关键字或指定NO_MODULE关键字或使用其">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WMJ考核finaltask学习报告">
+<meta property="og:url" content="http://qiyu3816.github.io/2020/10/23/ARCCV_finaltask/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="2020\10\15 WMJ视觉组考核finaltask学习报告（个人笔记）CMake 进阶 find_package的原理。find_package用来查找依赖包。查找方式有Module模式（basic signature）和Config模式（full signature），前者是基础，后者更高级且复杂。当find_package()中指定CONFIG关键字或指定NO_MODULE关键字或使用其">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/11/0cn0WF.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/11/0cnwJU.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/11/0cndiT.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/15/0ohByF.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/15/0ohNiq.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/15/0ohUJ0.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/15/0oh0QU.jpg">
+<meta property="article:published_time" content="2020-10-23T03:25:23.323Z">
+<meta property="article:modified_time" content="2020-10-23T03:25:04.000Z">
+<meta property="article:author" content="qiyu3816">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/10/11/0cn0WF.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiyu3816.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ARCCV_finaltask" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/10/23/ARCCV_finaltask/" class="article-date">
+  <time datetime="2020-10-23T03:25:23.323Z" itemprop="datePublished">2020-10-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      WMJ考核finaltask学习报告
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2020\10\15</p>
+<h2 id="WMJ视觉组考核finaltask学习报告（个人笔记）"><a href="#WMJ视觉组考核finaltask学习报告（个人笔记）" class="headerlink" title="WMJ视觉组考核finaltask学习报告（个人笔记）"></a>WMJ视觉组考核finaltask学习报告（个人笔记）</h2><h3 id="CMake-进阶"><a href="#CMake-进阶" class="headerlink" title="CMake 进阶"></a>CMake 进阶</h3><ol>
+<li><p>find_package的原理。find_package用来查找依赖包。查找方式有Module模式（basic signature）和Config模式（full signature），前者是基础，后者更高级且复杂。当find_package()中指定CONFIG关键字或指定NO_MODULE关键字或使用其他Module模式不支持的配置，即Config模式。</p>
+<p><strong>Module模式</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">find_package(&lt;PackageName&gt; [version] [EXACT] [QUIET] [MODULE]</span><br><span class="line">			[REQUIRED] [[COMPONENTS] [components...]]</span><br><span class="line">         	[OPTIONAL_COMPONENTS components...]</span><br><span class="line">         	[NO_POLICY_SCOPE])</span><br></pre></td></tr></table></figure>
+<p>Module模式下，相比于Config模式，可选配置参数少一些，并且如果按用户指定的配置却找不到包，就会自动进入Config模式。</p>
+<p>其中， <code>version</code> 和 <code>EXACT</code> 分别指定兼容版本和完全匹配版本， <code>QUIET</code> 可选字段指示查找失败后屏幕不输出，但同时指定 <code>REQUIRED</code> 的话还是会输出。 <code>COMPONENTS</code> <code>components</code> 可选字段表示查找的包中必须包含的组件，任何一个查找失败则报错。而  <code>OPTIONAL_COMPONENTS</code> <code>components</code> 则是查找失败也继续执行。</p>
+<p>Module模式下是要查找到名为<code>Find&lt;PackageName&gt;.cmake</code>的文件。</p>
+<p>先在<code>CMAKE_MODULE_PATH</code>变量对应的路径中查找。如果路径为空，或者路径中查找失败，则在cmake module directory（cmake安装时的Modules目录，比如<code>/usr/local/share/cmake/Modules</code>）查找。</p>
+<p><strong>Config模式</strong>：</p>
+<p>Config模式的参数就太多了，查找顺序也很长，写在这里也记不全，使用的时候再查阅吧。</p>
+<p>Config模式要找 <code>&lt;PackageName&gt;Config.cmake</code> 或 <code>&lt;lower-case-package-name&gt;-config.cmake</code> 。</p>
+<p>总之，先查找指定的ROOT或DIR，然后查找环境变量和注册表的路径，大部分步骤都可以添加参数选择跳过。</p>
+</li>
+<li><p>add_library、target_link_libraries和link_directories。</p>
+<p>add_library<strong>将指定的源文件生成链接文件，然后添加到工程中</strong>去。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">add_library(&lt;name&gt; [STATIC | SHARED | MODULE]</span><br><span class="line">			[EXCLUDE_FROM_ALL]</span><br><span class="line">			[source1] [source2] [...])</span><br></pre></td></tr></table></figure>
+<p>[STATIC | SHARED | MODULE] 指定生成库文件的类型，分别是静态库、动态库、未链接到其他目标的插件。</p>
+<p>target_link_libraries<strong>将目标文件与库文件进行链接</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target_link_libraries(&lt;target&gt; ... &lt;item&gt;... ...)</span><br></pre></td></tr></table></figure>
+<p>\<target\>必须由add_executable()或ad_library()创建，\<item\>可以是库目录名称、库文件完整路径、库名、链接标志或生成器表达式。</p>
+<p>link_directories<strong>指定要链接的库文件的路径</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">link_directories([AFTER|BEFORE] directory1 [directory2 ...])</span><br></pre></td></tr></table></figure>
+<p>路径会被添加到当前目录列表中，而[AFTER|BEFORE]（默认AFTER）则是选择头添加还是附加（prepend|append）。</p>
+<p>总之，link_directories指定库文件路径（有时可以不要），然后add_library生成链接文件交给target_link_libraries与库文件链接。</p>
+</li>
+<li><p>手动链接一个OpenCV链接库。大概就是，写一个CMakeLists.txt文件，在该目录下打开终端，cmake并make，比如这个图像显示测试：</p>
+<p><img src="https://s1.ax1x.com/2020/10/11/0cn0WF.jpg" alt="0cn0WF.jpg"></p>
+<p><img src="https://s1.ax1x.com/2020/10/11/0cnwJU.jpg" alt="0cnwJU.jpg"></p>
+<p><img src="https://s1.ax1x.com/2020/10/11/0cndiT.jpg" alt="0cndiT.jpg"></p>
+</li>
+<li><p>使用多级的CMakeLists管理子目录。cmake 要求工程主目录和所有存放源代码子目录下都要编写CMakeLists.txt 文件。假设当前工程目录为<strong>src</strong>，有子目录<strong>server</strong>（存放项目的主功能类文件），<strong>utility</strong>（存放项目要用到相关库文件，便已成为库文件存放到子目录<strong>lib</strong> 中），<strong>lib</strong>（存放<strong>utility</strong> 生成的库），<strong>bin</strong>（存放<strong>association</strong> 生成的二进制文件），<strong>build</strong>（编译目录，存放编译生成的中间文件）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 工程主目录的CMakeLists.txt</span><br><span class="line"># 个人觉得与之前的简单一般编译不同的是，要添加子目录</span><br><span class="line">ADD_SUBDIRECTORY(&lt;directoryName&gt;)</span><br><span class="line"># 子目录的添加不分顺序</span><br></pre></td></tr></table></figure>
+<p>而各子文件目录中的CMakeLists.txt：</p>
+<p>都要用SET(SOURCE_FILES)、INCLUDE_DIRECTORIES()设置源文件目录、相关头文件的目录。而例如 <strong>utility</strong> 为了生成链接库文件，则LINK_DIRECTORIES()设置相关库文件目录，然后依次ADD_LIBRARY()、TARGET_LINK_LIBRARY()生成链接库并链接依赖的库文件。 <strong>server</strong> 中为了生成主功能执行文件，则LINK_LIBRARIES(${PROJECT_SOURCE_DIR}/lib)设置链接库文件的目录，然后依次ADD_EXECUTABLE()、TARGET_LINK_LIBRARIES()生成可执行文件并与依赖的库文件链接。同时，这样子目录的CMakeLists.txt结尾都加上SET_TARGET_PROPERTIES()设置生成文件的所在路径，比如 <code>SET_TARGET_PROPERTIES(server PROPERTIES RUNTIME_OUTPUT_DIRECTORY &quot;\$&#123;PROJECT_SOURCE_BIR&#125;/bin&quot;)</code> 。</p>
+</li>
+</ol>
+<p>参考：<a target="_blank" rel="noopener" href="https://cmake.org/cmake/help/v3.16">r1</a>，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/39fc5e548310">r2</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/haluoluo211/article/details/80559341">r3</a>，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Free-Thinker/p/6163315.html">r4</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/wphkadn/article/details/83064623">r5</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/wphkadn/article/details/83064623">r6</a></p>
+<h3 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h3><p>​        大一上学期已经通过看网课学了Python，后来又学了Matplotlib、一些Python与机器学习。到现在都没有太大问题。</p>
+<h3 id="串口通信"><a href="#串口通信" class="headerlink" title="串口通信"></a>串口通信</h3><p>​        通信协议。分为物理层和协议层：</p>
+<ul>
+<li><p>物理层规定通信系统中的机械、电子部分的特性，即硬件部分。</p>
+<p><strong>TTL</strong> 一般是直接从单片机或者芯片发出的电平，<strong>逻辑1为2.4V~5V，逻辑0为0V~0.5V。</strong></p>
+<p><strong>RS232</strong> <strong>逻辑1为-15V~-3V，逻辑0为+3V~+15V。</strong></p>
+<p>RS232标准串口通讯中，芯片传出的TTL电平经过电平转换芯片转换成RS232电平。而原生串口通讯中主要是控制器跟串口的设备或传感器通信，故不需要电平转换芯片，直接以TTL电平通信。</p>
+</li>
+<li><p>协议层。</p>
+<p><strong>起始位，</strong> 由1个逻辑0的数据位表示。</p>
+<p><strong>结束位，</strong> 由0.5、1、1.5或2个逻辑1的数据位表示。</p>
+<p><strong>数据位，</strong> 在起始位后紧接着的即数据位，长度被约定为5、6、7、8或9位长度。</p>
+<p><strong>校验位，</strong> 可选，在数据为之后，结束位之前。包括奇、偶校验，0、1校验和无校验五种。奇校验中，有效数据加上校验位中1的个数为奇，偶校验则为偶；0、1校验中校验位分别总是0、1；无校验则没有校验位。</p>
+<p>总之，起始位表示开始传输有效数据，然后校验位校验，由结束位表示此数据元结束。</p>
+</li>
+<li><p><strong>波特率，</strong> 反映每秒传输数据元个数。注意，<strong>比特率</strong> 是每秒钟传送的二进制位数。</p>
+<p>即：比特率 = 单个数据元占二进制位数 × 波特率。</p>
+</li>
+</ul>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Chen_qi_hai/article/details/96473076">r7</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/cool9932/article/details/79419990">r8</a>，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wenshinlee/p/8970092.html">r9</a></p>
+<h3 id="Boost串口通信"><a href="#Boost串口通信" class="headerlink" title="Boost串口通信"></a>Boost串口通信</h3><ol>
+<li><p>Python虚拟串口，从网上找的代码，了解了一下句子意思之后就用了：</p>
+<p><img src="https://s1.ax1x.com/2020/10/15/0ohByF.jpg" alt="0ohByF.jpg"></p>
+</li>
+<li><p>boost::asio向虚拟串口发送信息，先声明boost::asio::io_service和初始化boost::asio::serial_port，我采用控制台输入串口名称的方式连接串口，然后根据识别程序的坐标点返回write数据。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">boost::asio::io_service io;</span><br><span class="line">		boost::<span class="function">asio::serial_port <span class="title">sp</span><span class="params">(io, argv[<span class="number">1</span>])</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="modern-C-的新属性"><a href="#modern-C-的新属性" class="headerlink" title="modern C++ 的新属性"></a>modern C++ 的新属性</h3><h4 id="C-多线程："><a href="#C-多线程：" class="headerlink" title="C++ 多线程："></a>C++ 多线程：</h4><p>​        线程的创建。线程只能移动，不能拷贝，可通过 <code>move</code> 构造函数移动。线程启动后指定其运行方式，如果指定detach，可能面临线程还没结束，函数已经退出的风险，此时就可能访问已销毁的变量。如果指定join，就需要等待线程，指定前使用joinable查看其是否可加入。</p>
+<p>​        互斥量。通过实例化互斥量 <code>mutex</code> 保护共享数据。因为，会出现<strong>条件竞争</strong>的情况，比如双向量表中，线程1删除节点B，而在其将节点A的post指针向节点C指向过程中，线程2删除了节点C，那么将导致整个invariants被破坏且不可恢复。RAII方式提供模板类 <code>lock_guard</code> <code>unique_lock</code> 都可以构造锁来为调用的成员函数上锁保护数据，但后者粒度更细，保护的数据更精细。互斥量所有权可以传递：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutex mu;</span><br><span class="line"><span class="function">unique_lock&lt;mutex&gt; <span class="title">locker</span><span class="params">(mu)</span></span>;</span><br><span class="line">unique_lock&lt;mutex&gt; locker2 = <span class="built_in">move</span>(locker);</span><br></pre></td></tr></table></figure>
+<p>​        同步并发。<condition_variable>头文件中设置了条件变量两种实现 <code>condition_variable</code> <code>condition_variable_any</code> ，二者都需要提前设置一个互斥量，前者仅支持 <code>std::mutex</code> ，后者可以支持任何标准的互斥量，但会增加开销，比如： <code>condition_variable cond;</code> ， <code>cond.notify_one()</code> 发送激活信号， 另一个线程中的 <code>cond.wait(locker, []() &#123;return !q.empty(); &#125;);</code> 接收信号，以locker为参数 ，休眠过程中线程不能有数据被锁住，而第二个参数判断是否为伪激活。</p>
+<p>​        <strong>future和promise</strong>。我想这应该会更多地为后面的串口通信所用。</p>
+<ul>
+<li><p>线程A中创建一个\<int\>的std::promise对象 <code>std::promise&lt;int&gt; proObj;</code> ；</p>
+</li>
+<li><p>把此std::promise关联到一个std::future <code>std::future&lt;int&gt; futObj = proObj.get_future();</code> ；</p>
+</li>
+<li><p>把proObj对象传递给另一个线程B，线程B可适时设置该对象的值 <code>proObj.set_value(23);</code> ；</p>
+</li>
+<li><p>然后线程A中可通过std::future读取该对象的值 <code>int val = futObj.get();</code> 。</p>
+</li>
+</ul>
+<p>​        注意：promise的共享状态会在<strong>调用set_value后更新为ready</strong>，这样futureObj才能用get()获取该值。若promise对象不设置值或者异常，promise对象在析构时会自动设置一个future_error一场（broken_promise）来设置其自身的就绪状态（个人理解为promise必须“初始化”）。promise的set_value<strong>只能被调用一次</strong>，因为一次调用就已经是ready状态了，多次调用会抛出std::future_error异常。std::future<strong>自己构造无效</strong>，是通过std::promise::get_future得到的。</p>
+<p>​        <strong>future的阻塞等待特性（wait_for）</strong>用来实现线程同步。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_ready</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">future</span>&lt;T&gt; <span class="keyword">const</span>&amp; f)</span></span></span><br><span class="line"><span class="function"></span>&#123; <span class="keyword">return</span> f.wait_for(<span class="built_in">std</span>::chrono::seconds(<span class="number">0</span>)) == <span class="built_in">std</span>::future_status::<span class="built_in">ready</span>; &#125;</span><br></pre></td></tr></table></figure>
+<p>​        future对象的wait_for函数会阻塞等待结果变得可用，判断标志为：</p>
+<ul>
+<li><p>设置的时间超时</p>
+</li>
+<li><p>共享对象的状态更新为ready</p>
+</li>
+</ul>
+<p>​        返回值future_status::deferred、future_status::ready、future_status::timeout分别表示计算结果的函数未启动、结果ready、超时的状态。</p>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/cpp-std-thread.html">r10</a>，<a target="_blank" rel="noopener" href="https://www.runoob.com/cplusplus/cpp-multithreading.html">r11</a>，<a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/cpp-multithread-demo.html">r12</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_36049506/article/details/93333549">r13</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/guotianqing/article/details/103770992">r14</a></p>
+<h4 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h4><ol>
+<li><p><strong>类型推导</strong>。C++11 可使用auto关键字来自动推导变量类型，如 <code>vector&lt;string&gt;dict</code> 的迭代器可声明为 <code>auto it=dict.begin()</code> ，auto自动推出其变量类型。</p>
+<p>注： <code>void fun(auto x =1) &#123;&#125;</code> auto函数参数有些编译器无法通过，谨慎使用；</p>
+<p>​        <code>struct ex&#123;auto var=10;&#125;;</code> auto非静态成员变量，无法通过编译；</p>
+<p>​        <code>char x[3];auto z[3]=x;</code> auto数组，无法通过编译；</p>
+<p>​        <code>vector&lt;auto&gt;x=&#123;1&#125;</code> auto模板参数（实例化时），无法通过编译。</p>
+<p>decltype，个人理解的意思是对一个系统已知类型的变量调用，则返回这个变量的类型，用于声明其他变量。可用于声明一个与已有变量同类型的新变量，比如 <code>int i;decltype(i) j=0;</code> 。</p>
+<p>decltype还可以如下使用， <code>vector&lt;int&gt;vec;typedef decltype(vec.begin()) vectype;vectype x;</code> ，也就是把变量的类型获取并typedef为自己想要的样子来使用。</p>
+</li>
+<li><p><strong>基于范围的for循环</strong>。个人理解为，写起来基本类似于python中的 <code>for</code> <code>in</code> ，格式略有不同，如下， <code>vector&lt;int&gt;v=&#123;1,2,3,4&#125;;for(auto e:v)&#123;cout&lt;&lt;e&lt;&lt;endl;&#125;</code> 这里使用auto，看上去就更像python里面不用特地声明变量类型的for循环了。而且如果遍历的对象太大，可以使用&amp;引用 <code>const suto&amp; e:v</code> 。</p>
+</li>
+<li><p><strong>右值引用</strong>。个人理解如下：</p>
+<p>首先，左值和右值的区别是否能对表达式取地址，左值能而右值不能。左值引用即 <code>&amp;</code> ，也是C++98中的引用，C++11中右值引用符号为 <code>&amp;&amp;</code> ，右值引用的效果可以<strong>延长临时量的有效期，避免许多不必要的昂贵拷贝操作</strong>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>&amp;&amp; a=<span class="number">1</span>; <span class="comment">//右值引用, 实质上先分配一个值为1的无名整型变量, 然后再将引用与这个整型量绑定。</span></span><br><span class="line"><span class="keyword">int</span> b=<span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span>&amp;&amp; c=b; <span class="comment">//将一个左值复制给右值引用会导致编译错误!!!</span></span><br><span class="line"><span class="keyword">int</span>&amp;&amp; d=a; <span class="comment">//错误, 这里a的类型是右值引用类型(int &amp;&amp;), 但是如果从左值和右值的角度区分它, 它实际上是个左值! 因为可以对它取地址, 而且它还有名字, 是一个已经命名的右值。</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> &amp;e=<span class="number">1</span>; <span class="comment">//常量左值引用, 和右值引用原理基本一样, 但是只能读不能改</span></span><br><span class="line">a=getVar(); <span class="comment">//函数的返回值是临时值, 结束后就被释放, 而用右值引用可以延长其有效期</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>lambda表达式</strong>。方便定义和创建匿名函数。个人认为就像一个定义函数的新格式：</p>
+<p><code>[capture list] (params list) mutable exception-&gt; return type &#123; function body &#125;</code></p>
+<p>各项依次为<em>捕获外部变量列表</em>、<em>形参列表</em>、<em>用来说明是否可以修改捕获的变量的mutable指示符</em>、<em>异常设定</em>、<em>返回类型</em>、<em>函数体</em>。</p>
+<p>其中返回类型可以省略，编译器可以通过函数体中是否有返回以及返回的类型确定函数的返回类型。</p>
+<p>参数列表也可省略，这样就成了常见的无参函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">123</span>;</span><br><span class="line">    <span class="keyword">auto</span> f = [a] &#123; <span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>; &#125;; </span><br><span class="line">    f(); <span class="comment">// 输出：123</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//通过“函数体”后面的‘()’传入参数</span></span><br><span class="line">    <span class="keyword">auto</span> x = [](<span class="keyword">int</span> a)&#123;<span class="built_in">cout</span> &lt;&lt; a &lt;&lt; <span class="built_in">endl</span>;&#125;(<span class="number">123</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>捕获外部变量的方式包括<strong>值捕获</strong> <code>[a]</code> 、<strong>引用捕获</strong> <code>[&amp;a]</code> 、<strong>隐式捕获</strong> <code>[=]</code> <code>[&amp;]</code> ，第一种类似于普通函数的值传递；第二种只需加上引用说明；第三种让编译器根据函数体中的代码来推断需要捕获哪些变量， <code>[=]</code> 表示值捕获方式， <code>[&amp;]</code> 表示引用捕获。捕获方式可以混合。</p>
+<p>lambda表达式中，参数列表不能有默认参数，所有参数必须有参数名。</p>
+</li>
+</ol>
+<p>参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42434079/article/details/107452377">r15</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/tennysonsky/article/details/77461873">r16</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/li1914309758/article/details/81663488">r17</a>，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d19fc8447eaa">r18</a>，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/DswCnblog/p/5629165.html">r19</a></p>
+<h3 id="装甲板识别"><a href="#装甲板识别" class="headerlink" title="装甲板识别"></a>装甲板识别</h3><p>思路：</p>
+<p>首先，将原图三个通道分割，比较各通道值以判断该点颜色，然后对目标颜色区域进行亮化处理，并创建滑动条置于控制窗口中，可以调节颜色判断的阈值；得到的图像进行中值滤波去噪并进行膨胀处理防止灯柱过细。</p>
+<p>然后，在得到的灰度图中寻找轮廓，对找到的轮廓按面积和所得旋转矩形边长及长宽比进行初步筛选，可以得到一个或两个旋转矩形；这方法大概只能应对测试视频中较简单的环境，但找出的旋转矩形都是正确的灯条，然后确定中心点。</p>
+<p>如果只筛选出一个灯条，则根据上一中心点及该灯条长度进行校正得出当前中心点；两个灯条则直接取其两个质心求连线的中点即可。</p>
+<p>注：实在不知道怎么解决两个旋转矩形质心连线中点计算溢出的问题（之前发现只找到一个灯条时，得出的结果在装甲板上却不在中点，修改后就莫名溢出了，可能是因为四字节和八字节数据的问题），迫于时间问题只能硬着交了…（最终学习于基地的装甲板识别代码）</p>
+<p>最终结果通过boost::asio输出。</p>
+<p>CMakeLists.txt：</p>
+<p><img src="https://s1.ax1x.com/2020/10/15/0ohNiq.jpg" alt="0ohNiq.jpg"></p>
+<p><img src="https://s1.ax1x.com/2020/10/15/0ohUJ0.jpg" alt="0ohUJ0.jpg"></p>
+<p>push，链接 <a target="_blank" rel="noopener" href="https://github.com/qiyu3816/qiyu3816.git">github</a></p>
+<p><img src="https://s1.ax1x.com/2020/10/15/0oh0QU.jpg" alt="0oh0QU.jpg"></p>
+<h2 id="End"><a href="#End" class="headerlink" title="End"></a>End</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiyu3816.github.io/2020/10/23/ARCCV_finaltask/" data-id="ckglp15yv0005gcsff3q69jcx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/07/KalmanMouseTrack/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Kalman鼠标追踪</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/23/ARCCV_finaltask/">WMJ考核finaltask学习报告</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/07/KalmanMouseTrack/">Kalman鼠标追踪</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/10/sklearn_snippet/">sklearn杂项</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/04/Python-Spider/">Python Spider</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/02/SIFT_SURT_Setting/">SIFT&amp;SURF Setting</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 qiyu3816<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+</body>
+</html>
