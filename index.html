@@ -64,6 +64,393 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ROS学习记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="article-date">
+  <time datetime="2020-11-18T02:36:00.368Z" itemprop="datePublished">2020-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">ROS学习记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2020\11\08</p>
+<p>[TOC]</p>
+<h2 id="ROS学习记录"><a href="#ROS学习记录" class="headerlink" title="ROS学习记录"></a>ROS学习记录</h2><p>​    初学ROS，全程完全参考Wiki的教程以及网上找的电子书 <em>AGentleIntroductiontoROS</em> （已经上传到群里了），以下只是主要知识点简短的总结以方便自己复习。</p>
+<h3 id="一、安装ROS"><a href="#一、安装ROS" class="headerlink" title="一、安装ROS"></a>一、安装ROS</h3><p>​    按照<a target="_blank" rel="noopener" href="http://wiki.ros.org/melodic/Installation/Ubuntu">Wiki ROS</a>教程安装melodic发行版的ROS。</p>
+<h3 id="二、入门概述"><a href="#二、入门概述" class="headerlink" title="二、入门概述"></a>二、入门概述</h3><h4 id="1）功能包-软件包（Packages）"><a href="#1）功能包-软件包（Packages）" class="headerlink" title="1）功能包/软件包（Packages）"></a>1）功能包/软件包（Packages）</h4><p>​    在ROS中，所有软件都被组织为软件包的形式，称为ROS软件包或功能包，有时也简称为包。ROS 软件包是一组用于实现特定功能的相关文件的集合，包括可执行文件和其他支持文件。比如，可执行文件turtlesim_node和turtle_teleop_key都属于 turtlesim包。</p>
+<p>​    <strong>查看软件包和定位软件包</strong>： <code>rospack list</code> </p>
+<p>​    <strong>软件包目录（package.xml）</strong> ，每个程序包都有这么一个清单文件定义一些关于包的细节。其实，软件包的定义就是——任何ROS能找到且包含package.xml文件的目录就是软件包目录。</p>
+<p>​    <strong>找到一个软件包的目录</strong> ： <code>rospack find &lt;package-name&gt;</code> </p>
+<p>​    <strong>查看软件包</strong> ： <code>rosls &lt;package-name&gt;</code> </p>
+<p>​    <strong>访问软件包目录</strong> ： <code>roscd &lt;package-name&gt;</code> </p>
+<h4 id="2）节点管理器"><a href="#2）节点管理器" class="headerlink" title="2）节点管理器"></a>2）节点管理器</h4><p>​    ROS 的一个基本目标是使机器人专家设计的很多称为<strong>节点 （node）</strong>的几乎相对独立的小程序能够同时运行。为此，这些节点必须能够彼此通信。ROS 中实现通信的关键部分就是ROS节点管理器。</p>
+<p>​    <strong>启动节点管理器</strong> ： <code>roscore</code> </p>
+<p>​    节点管理器应该在使用ROS的全部时间内持续运行。一个合理的工作流程是在一个终端启动roscore，然后打开其他终端运行其他程序。除非你已经完成ROS的相关工作，否则一般没有理由终止 roscore 命令。当结束时，可以通过在roscore终端键入Ctrl-C停止节点管理器。</p>
+<h4 id="3）节点（Nodes）"><a href="#3）节点（Nodes）" class="headerlink" title="3）节点（Nodes）"></a>3）节点（Nodes）</h4><p>​    ROS程序的运行实例被称为<strong>节点（node）</strong>。</p>
+<p>​    在turtlesim的例子中，第一个节点是可执行文件turtlesim_node的实例化。这个节点负责创建turtlesim窗口和模拟海龟的运动。第二节点是可执行文件turtle_teleop_key的实例化。teleop 是 teleoperation（遥操作）的缩写，是指人通 过在远程发送运动指令控制机器人。这个节点的作用是捕捉方向键被按下的事件，并将方向键的按键信息转换为运动指令，然后将命令发送到turtlesim_node节点。</p>
+<p>​    <strong>启动节点</strong> ： <code>rosrun &lt;package-name&gt; &lt;executable-name&gt;</code> </p>
+<p>​    <strong>查看节点列表</strong> ： <code>rosnode list</code> </p>
+<p>​    关于此列表：</p>
+<ul>
+<li>rosout节点是一个特殊的节点，通过roscore自动启动。其作用有点类似于控制台程序中使用的标准输出（即 std::cout）。</li>
+<li>节点名并不一定与对应可执行文件名称相同。</li>
+</ul>
+<p>​    <strong>查看节点</strong> ： <code>rosnode info &lt;node-name&gt;</code> ，显示是发布者或订阅者等详细信息。</p>
+<p>​    <strong>终止节点</strong> ： <code>rosnode kill &lt;node-name&gt;</code> ，全清 <code>rosnode cleanup</code> </p>
+<h4 id="4）话题和消息"><a href="#4）话题和消息" class="headerlink" title="4）话题和消息"></a>4）话题和消息</h4><p>​    ROS节点之间进行通信所利用的最重要的机制就是消息传递。 在ROS中，消息有组织地存放在<strong>话题</strong>里。消息传递的理念是： 当一个节点想要分享信息时，它就会<strong>发布(publish)</strong>消息到对应的一个或者多个话题；当一个节点想要接收信息时，它就会<strong>订阅 (subscribe)</strong>它所需要的一个或者多个话题。ROS节点管理器负责确保发布节点和订阅节点能找到对方；而且消息是直接地从发布节点传递到订阅节点，中间并不经过节点管理器转交。</p>
+<p>​    <strong>查看节点构成的计算图</strong> ： <code>rqt_graph</code> </p>
+<p>​    第一张不包括rosout节点，第二张包括（且rqt_graph本身就是一个节点）：</p>
+<p>​    <img src="https://s1.ax1x.com/2020/11/08/BoB8Nn.png" alt=""></p>
+<p>​    <a target="_blank" rel="noopener" href="https://imgchr.com/i/BoBGhq"><img src="https://s1.ax1x.com/2020/11/08/BoBGhq.png" alt="BoBGhq.png"></a></p>
+<p>​    <strong>查看话题列表</strong> ： <code>rospack list</code> </p>
+<p>​    <strong>打印消息内容</strong> ： <code>rostopic echo &lt;topic-name&gt;</code> ，比如可以打印虚拟海龟的信息就用 <code>rostopic echo /turtle1/cmd_vel</code> 。</p>
+<p>​    <strong>测量发布频率</strong> ： <code>rostopic hz &lt;topic-name&gt;</code>  <code>rostopic bw &lt;topic-name&gt;</code> 用来测量消息发布的频率以及这 些消息所占用的带宽。</p>
+<p>​    <strong>查看话题</strong> ： <code>rostopic info &lt;topic-name&gt;</code> 显示话题的<strong>消息类型（Type）</strong>，发布者和订阅者。</p>
+<p>​    <strong>查看消息类型</strong> ： <code>rosmsg show &lt;message-type-name&gt;</code> ，比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ rosmsg show turtlesim&#x2F;color</span><br><span class="line">uint8 r</span><br><span class="line">uint8 g</span><br><span class="line">uint8 b</span><br></pre></td></tr></table></figure>
+<p>​    消息类型的<strong>顶层域</strong>和<strong>复合域</strong>个人理解类似于广义表中的节点和表，复合域也可以是消息类型。比如虚拟海龟的位置就是个复合域，其x坐标就是顶层域。</p>
+<p>​    <strong>用命令行发布消息</strong> ： <code>rostopic pub -r &lt;rate-in-hz&gt; &lt;topic-name&gt; message-type&gt; &lt;message-content&gt;</code> ，例如：</p>
+<p>​    <code>rostopic pub –r 1 /turtle1/cmd_vel geometry_msgs/Twist &#39;[2,0,0]&#39; &#39;[0,0,0]&#39;</code> 其中用单引号（’…’）和中括号（[…]）组织这些数值赋给它们对应的两个顶层复合域变量。</p>
+<p>​    <strong>消息类型的命名</strong>，和ROS里其他的程序一样，每条消息类型都属于一个特定的包。消息类型名总会包含一个斜杠，斜杠前面的名字是包含它的包： <code>package-name/type-name</code> 。此举主要是为了避免命名冲突、看上去明朗、容易猜测含义。</p>
+<h4 id="5）问题检查"><a href="#5）问题检查" class="headerlink" title="5）问题检查"></a>5）问题检查</h4><p>​    <code>roswtf</code> </p>
+<p>​    这条命令会进行全面而深入的检测，包括检测你的环境变量、安装的文件以及运行的节点。</p>
+<h3 id="三、编写ROS程序"><a href="#三、编写ROS程序" class="headerlink" title="三、编写ROS程序"></a>三、编写ROS程序</h3><h4 id="1）编写hello-world-cpp"><a href="#1）编写hello-world-cpp" class="headerlink" title="1）编写hello_world.cpp"></a>1）编写hello_world.cpp</h4><p>​    自己用mkdir命令创建<strong>工作区（workspace）</strong>，工作区下创建src子目录存放功能包的源码。</p>
+<p>​    ==在src下运行== <code>catkin_create_pkg &lt;package-name&gt;</code> ，自己随便去个包名吧。这个命令创建一个和包同名的文件夹，里面给我们建好了CMakeLists.txt和package.xml文件，前者无需多说，后者就是本包的清单文件了。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span>&#123;</span><br><span class="line">    ros::init(argc, argv, <span class="string">&quot;hello_world_ros&quot;</span>);</span><br><span class="line"></span><br><span class="line">    ros::NodeHandle nh;</span><br><span class="line"></span><br><span class="line">    ROS_INFO_STREAM(<span class="string">&quot;hello, ROS!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>首先声明<strong>头文件ros/ros.h</strong>。</p>
+</li>
+<li><p>然后<strong>ros::init函数</strong>初始化ROS客户端库。请在程序的起始处调用 一次该函数。函数最后的参数是一个包含节点默认名的字符串。</p>
+</li>
+<li><p><strong>ros::NodeHandle（节点句柄）</strong>对象是你的程序用于和ROS系统交互的主要机制 。创建此对象会==将你的程序注册为ROS节点管理器的节点==。最简单的方法就是在整个程序中只创建一个NodeHandle对象。</p>
+<p>在内部，NodeHandle 类维护一个引用计数，仅仅在第一个NodeHandle对象创建时才会在节点管理器注册新的节点。同样，只有当所有的NodeHandle对象都销毁后，节点才会 注销。</p>
+</li>
+<li><p><strong>ROS_INFO_STREAM宏</strong>将生成一条消息，且这一消息被发送到不同的位置，包括==控制台窗口==。</p>
+<h4 id="2）catkin-make编译："><a href="#2）catkin-make编译：" class="headerlink" title="2）catkin_make编译："></a>2）catkin_make编译：</h4></li>
+</ul>
+<p>​    遵循CMakeLists.txt和package.xml，模板之前都已经生成好了，之需要：</p>
+<ul>
+<li><code>find_package(catkin REQUIRED COMPONENTS package-names)</code> 添加需要的包，比如现在加个roscpp。</li>
+<li><code>add_executable(executable-name source-files)</code> 声明可执行文件，根目录就是本包的目录。比如这里用 <code>add_executable(hello_world hello_world.cpp)</code> 。</li>
+<li><code>target_link_libraries(executable-name $&#123;catkin_LIBRARIES&#125;)</code> 链接库。</li>
+<li><code>&lt;build_depend&gt;package-name&lt;/build_depend&gt;</code> <code>&lt;run_depend&gt;package-name&lt;/run_depend&gt;</code> <code>&lt;exec_depend&gt;package-name&lt;/exec_depend&gt;</code> 添加到package.xml中。这里只需要前两个，包名roscpp。</li>
+</ul>
+<p>​    最后一步，运行==catkin_make==生成可执行文件，==这个命令必须在工作区目录下运行==。</p>
+<p>​    然后它会在工作区目录下创建devel和build两个目录，用于存放和编译相关文件。自己想的话调试完后也可以删掉它们。</p>
+<h4 id="3）运行"><a href="#3）运行" class="headerlink" title="3）运行"></a>3）运行</h4><p>​    <code>source devel/setup.bash</code> 后 <code>rosrun &lt;package-name&gt; &lt;executable-name</code>&gt;就行，也可以用roslaunch。</p>
+<h4 id="4）发布者程序（pubvel-cpp）"><a href="#4）发布者程序（pubvel-cpp）" class="headerlink" title="4）发布者程序（pubvel.cpp）"></a>4）发布者程序（pubvel.cpp）</h4><p>​    这里只介绍相对hello_world.cpp添加的流程。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This program publishes randomly−generated velocity</span></span><br><span class="line"><span class="comment">// messages for turtlesim.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;geometry_msgs/Twist.h&gt; // For geometry_msgs::Twist</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; // For rand() and RAND_MAX</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">( <span class="keyword">int</span> argc , <span class="keyword">char</span>** argv )</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Initialize the ROS system and become a node.</span></span><br><span class="line">    ros::init( argc , argv , <span class="string">&quot;publish_velocity&quot;</span> ) ;</span><br><span class="line">    ros::NodeHandle nh ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create a publisher obj ect.</span></span><br><span class="line">    ros::Publisher pub = nh.advertise&lt;geometry_msgs::Twist&gt;(</span><br><span class="line">    <span class="string">&quot;turtle1/cmd_vel&quot;</span>, <span class="number">1000</span> ) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Seed the random number generator.</span></span><br><span class="line">    srand(time(<span class="number">0</span>)) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Loop at 2Hz until the node is shut down.</span></span><br><span class="line">    <span class="function">ros::Rate <span class="title">rate</span><span class="params">(<span class="number">2</span>)</span></span>;</span><br><span class="line">    <span class="keyword">while</span> ( ros::ok() ) &#123;</span><br><span class="line">    <span class="comment">// Create and fill in the message . The other four</span></span><br><span class="line">    <span class="comment">// fields, which are ignored by turtl esim, default to 0.</span></span><br><span class="line">    geometry_msgs::Twist msg ;</span><br><span class="line">    msg.linear.x = <span class="keyword">double</span>(rand())/<span class="keyword">double</span>(RAND_MAX);</span><br><span class="line">    msg.angular.z = <span class="number">2</span>*<span class="keyword">double</span>(rand())/<span class="keyword">double</span>(RAND_MAX)<span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Publish the message.</span></span><br><span class="line">    pub.publish(msg) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Send a message to rosout with the details.</span></span><br><span class="line">    ROS_INFO_STREAM( <span class="string">&quot;Sending random velocity command : &quot;</span></span><br><span class="line">    &lt;&lt; <span class="string">&quot; linear=&quot;</span> &lt;&lt; msg.linear.x</span><br><span class="line">    &lt;&lt; <span class="string">&quot; angular=&quot;</span> &lt;&lt; msg.angular.z) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait untilit&#x27;s time for another iteration.</span></span><br><span class="line">    rate.sleep();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>这里声明头文件还要添加程序中每个用到的<strong>消息类型功能包</strong> <code>#include&lt;package_name/type_name.h&gt;</code> ，功能包名应该是定义消息类型的包的名称， 而不一定是你自己的包的名称。比如要发布类型为 geometry_msgs/Twist 的消息 <code>#include &lt;geometry_msgs/Twist.h&gt;</code> 。</p>
+</li>
+<li><p><strong>创建发布者对象</strong>， <code>ros::Publisher pub = node_handle.advertise( topic_name, queue_size);</code> 其中：</p>
+<p>node_handle是在程序最初创建的；</p>
+<p>topic_name是想要发布到的话题；</p>
+<p>queue_size是一个整数，表示这个发布者发布的消息序列的大小。通常设置成1000比较合适。是因为大多数情况下，消息必须发送到其他节点。这个通信过程可能是耗时的，特别是相比于创建消息所需要的时间。</p>
+<p>注意：==最好为每个话题创建一个发布者，并在执行过程中一直是用它==。</p>
+</li>
+<li><p><strong>创建并填充消息对象</strong>，pubvel.cpp中声明geometry_msgs::Twist创建消息对象实例，然后用(“.”)符号访问各个域进行填充。</p>
+</li>
+<li><p><strong>发布消息</strong>，<code>pub.pubish(msg)</code> ，用发布者对象调用此函数并以消息为输入参数。</p>
+</li>
+<li><p><strong>节点是否停止工作的检查</strong>， 若节点被 <code>rosnode kill</code> 了，或终端Ctrl-C了，或程序中调用了 <code>ros::shutdown()</code> ，或启动了一个相同程序的新实例，<code>ros::ok()</code> 会返回false。</p>
+</li>
+<li><p><strong>控制消息发布频率</strong>，<code>ros::Rate rate(2);</code> </p>
+<p>​    这个对象控制循环运行速度，其构造函数中的参数以赫兹（Hz） 为单位，即每秒钟的循环数。这个例子创建了旨在规范每秒钟执 行两个迭代循环的速率对象。</p>
+<p>​    邻近每次循环迭代的结尾，调用此对象的 sleep 方法：  <code>rate.sleep();</code> </p>
+<p>​    每次调用此方法时就会在程序中产生延迟。延迟的持续时间被用来阻止循环的迭代速率超过指定的速率。==没有这种控制，程序会 以计算机允许的最快速度发布消息==，这样会占满发布和订阅的序列。</p>
+</li>
+<li><p><strong>定义输出格式</strong>，用宏ROS_INFO_STREAM，可以看到代码中的输出和C++常用的(“&lt;&lt;”)符没有太大差别。</p>
+</li>
+<li><p><strong>编译</strong>这个pubvel.cpp时CMakeLists.txt需要作出添加 <code>find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs)</code> 。</p>
+<p>package.xml需要添加 <code>&lt;build_depend&gt;geometry_msgs&lt;/build_depend&gt;</code> <code>&lt;run_depend&gt;geometry_msgs&lt;/run_depend&gt;</code> 。</p>
+</li>
+<li><p>执行和之前无异。</p>
+<h4 id="5）订阅者程序（subpose-cpp）"><a href="#5）订阅者程序（subpose-cpp）" class="headerlink" title="5）订阅者程序（subpose.cpp）"></a>5）订阅者程序（subpose.cpp）</h4></li>
+</ul>
+<p>​    这里只介绍相对hello_world.cpp添加的流程。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This program subscribes to turtle1/pose and shows its</span></span><br><span class="line"><span class="comment">// messages on the screen .</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;turtlesim/Pose.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iomanip&gt; // for std::setprecision and std::fixed</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// A callback function . Executed each time a new pose</span></span><br><span class="line"><span class="comment">// message arrives .</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">poseMessageReceived</span><span class="params">( <span class="keyword">const</span> turtlesim::Pose&amp; msg )</span> </span>&#123;</span><br><span class="line">     ROS_INFO_STREAM( <span class="built_in">std</span>::setprecision(<span class="number">2</span>) &lt;&lt; <span class="built_in">std</span>::fixed</span><br><span class="line">     &lt;&lt; <span class="string">&quot; position =(&quot;</span> &lt;&lt; msg.x &lt;&lt; <span class="string">&quot; , &quot;</span> &lt;&lt; msg.y &lt;&lt; <span class="string">&quot; ) &quot;</span></span><br><span class="line">     &lt;&lt; <span class="string">&quot; *direction=&quot;</span> &lt;&lt; msg.theta ) ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc , <span class="keyword">char</span>** argv )</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Initialize the ROS system and become a node .</span></span><br><span class="line">    ros::init( argc, argv, <span class="string">&quot;subscribe_to_pose&quot;</span> );</span><br><span class="line">    ros::NodeHandle nh;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create a subscri ber obj ect .</span></span><br><span class="line">    ros::Subscriber sub = nh.subscribe( <span class="string">&quot;turtle1/pose&quot;</span>,<span class="number">1000</span>,</span><br><span class="line">    &amp;poseMessageReceived ) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Let ROS take over .</span></span><br><span class="line">    ros::spin() ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>编写回调函数</strong>，这个回调函数用于控制接收到话题的消息后所作的动作。</p>
+<p><code>void function_name(const package_name::type_name &amp;msg) &#123; . . . &#125;</code> </p>
+<p>输入参数就是一个消息。</p>
+</li>
+<li><p><strong>创建订阅者对象</strong>， <code>ros::Subscriber sub = node_handle.subscribe (topic_name,queue_size, pointer_to_callback_function);</code> </p>
+<p>其中：</p>
+<p>node_handle仍是程序开始创建的ros::NodeHandle对象；</p>
+<p>此后三个参数除了多了个回调函数指针外与发布者无异。</p>
+<p>注意：queue_size是本订阅者的消息队列大小，也是整数。当新的消息到达时，它们会被保存在这个队列中，直到 ROS 有机会去执行相应的回调函数。此参数表示 ROS 在队列中 同一时刻可以存储的消息的最大值。==如果新消息到达时队列已满，最早到达的还没有被处理的消息将会被丢弃以便腾出空间来。== 通过如下两个方法减少订阅者队列溢出的可能性：</p>
+<p>（1）通过调用 ros::spin 或者 ros:spinOnce 确 保允许回调发生；</p>
+<p>（2）减少每个回调函数的计算时间。</p>
+</li>
+<li><p><strong>给ROS控制权</strong>，==只有当我们明确给ROS许可时， 它才会执行我们的回调函数== 。</p>
+<p><code>ros::spinOnce();</code> </p>
+<p>这个代码要求 ROS 去执行所有挂起的回调函数，然后将控制权限返回给我们。另一个方法： </p>
+<p><code>ros::spin();</code> </p>
+<p>这个方法要求 ROS 等待并且执行回调函数，直到这个节点关机。 换句话说，ros::spin()大体等于这样一个循环： </p>
+<p>while( ros::ok() ) {  ros::spinOnce();  } </p>
+<p>使用 ros::spinOnce()还是使用 ros::spin()的建议如下：你的<strong>程序除了响应回调函数，还有其他重复性工作要做吗</strong>？如果答案是 “否”，那么使用 ros::spin()；否则，合理的选择是写一个循环，做其他需要做的事情，并且周期性地调用 ros::spinOnce()来处理回调。</p>
+</li>
+<li><p>subpose.cpp的编译只需要在CMakeLists.txt添加可执行文件声明即可</p>
+<h3 id="四、日志消息"><a href="#四、日志消息" class="headerlink" title="四、日志消息"></a>四、日志消息</h3></li>
+</ul>
+<h4 id="1）严重级别"><a href="#1）严重级别" class="headerlink" title="1）严重级别"></a>1）严重级别</h4><p>​    ROS日志系统的核心思想， 就是使程序生成一些简短的文本字符流，这些字符流便是日志消息。ROS中，日志消息分为五个不同的<strong>严重级别</strong>，也可简称为严重性或者级别。按照严重性程度递增，这些级别有： </p>
+<p><strong>DEBUG</strong> </p>
+<p><strong>INFO</strong> </p>
+<p><strong>WARN</strong> </p>
+<p><strong>ERROR</strong> </p>
+<p><strong>FATAL</strong></p>
+<h4 id="2）生成日志消息"><a href="#2）生成日志消息" class="headerlink" title="2）生成日志消息"></a>2）生成日志消息</h4><p>​    从C++代码生成日志消息。 <strong>生成简单的日志消息</strong>总共有五个基本的 C++宏用来产生日志消 息，其中每个宏对应一个严重级别： </p>
+<p><code>ROS_DEBUG_STREAM(message);</code></p>
+<p><code>ROS_INFO_STREAM(message);</code>  </p>
+<p><code>ROS_WARN_STREAM(message);</code></p>
+<p><code>ROS_ERROR_STREAM(message);</code>  </p>
+<p><code>ROS_FATAL_STREAM(message);</code></p>
+<p>​    其中各个宏的参数 <strong>message</strong> 可以处理 C++中标准输出流（ostream） 中的各种表达式，比如 std::cout。这包括在 int 或者 double 这种基本数据类型上使用插入操作符（&lt;&lt;），以及已经重载这个操作符的复合数据类型，或者是标准流操作符，比如 std::fixed， std::setprecision 或者 std::boolalpha。</p>
+<h4 id="3）生成一次性日志消息"><a href="#3）生成一次性日志消息" class="headerlink" title="3）生成一次性日志消息"></a>3）生成一次性日志消息</h4><p><strong>ROS_DEBUG_STREAM_ONCE(message); </strong></p>
+<p><strong>ROS_INFO_STREAM_ONCE (message); </strong></p>
+<p><strong>ROS_WARN_STREAM_ONCE (message); </strong></p>
+<p><strong>ROS_ERROR_STREAM_ONCE (message); </strong></p>
+<p><strong>ROS_FATAL_STREAM_ONCE (message); </strong></p>
+<p>​    程序运行中第一次到达这些宏时，它们将产生与相应的无 -ONCE 后缀版本宏一样的日志消息。第一次执行后，这些声明将不再发挥作用。</p>
+<h4 id="4）生成频率受控的日志消息"><a href="#4）生成频率受控的日志消息" class="headerlink" title="4）生成频率受控的日志消息"></a>4）生成频率受控的日志消息</h4><p><strong>ROS_DEBUG_STREAM_THROTTLE(interval, message); </strong></p>
+<p><strong>ROS_INFO_STREAM_THROTTLE(interval, message); </strong></p>
+<p><strong>ROS_WARN_STREAM_THROTTLE(interval, message); </strong></p>
+<p><strong>ROS_ERROR_STREAM_THROTTLE(interval, messge); </strong></p>
+<p><strong>ROS_FATAL_STREAM_THROTTLE(interval, message);</strong></p>
+<p>​    参数 interval 是 double 类型的，它表示以秒为单位的时间量，这 是相邻日志消息出现的最小时间间隔。</p>
+<h4 id="5）查看日志消息"><a href="#5）查看日志消息" class="headerlink" title="5）查看日志消息"></a>5）查看日志消息</h4><p>​    日志消息有三个目的地：控制台，/rosout话题，日志文件。</p>
+<p>​    查看/rosout消息的方式：<code>rostopic echo /rosout</code> 或 <code>rqt_console</code> </p>
+<h4 id="6）日志文件"><a href="#6）日志文件" class="headerlink" title="6）日志文件"></a>6）日志文件</h4><p>​    生成日志文件作为/rosout话题回调函数的一部分，该节点可以将日志消息作为一行写入到一个日志文件，文件名类似于： ~/.ros/log/run_id/rosout.log</p>
+<p>​    <strong>运行标识码（run_id）</strong>是一个通用<strong>唯一识别码</strong>（UUID），它在节点管理器开始运行时基于你计算机的 MAC 地址和当前的时间生成。</p>
+<p>​    <strong>查看运行标识码</strong>，通过检查 roscore 生成的输出，在靠近输出末端的位置，可以看到与下面内容类似的一行 <strong>setting /run_id to run_id</strong> ；或通过以下命令向节点管理器询问当前的 run_id： <code>rosparam get /run_id</code> 。</p>
+<p>​    <strong>检查和清楚日志文件</strong>，分别用 <code>rosclean check</code>  <code>rosclean purge</code> ，ROS不会自动清理日志文件，但在其超过1G时会发出提醒。<strong>可以自己清理它们</strong>。</p>
+<h3 id="五、启动文件"><a href="#五、启动文件" class="headerlink" title="五、启动文件"></a>五、启动文件</h3><p>​    ROS 提供了一 个同时启动节点管理器（master）和多个节点的途径，即使用<strong>启动文件（launch file）</strong>。其基本思想是在一个XML格式的文件内将需要同时启动的一组节点罗列出来。</p>
+<h4 id="1）："><a href="#1）：" class="headerlink" title="1）："></a>1）<example.launch>：</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">launch</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> </span></span><br><span class="line"><span class="tag"><span class="attr">pkg</span>=<span class="string">&quot;turtlesim&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">type</span>=<span class="string">&quot;turtlesim_node&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">name</span>=<span class="string">&quot;turtlesim&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">respawn</span>=<span class="string">&quot;true&quot;</span> </span></span><br><span class="line"><span class="tag">/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> </span></span><br><span class="line"><span class="tag"><span class="attr">pkg</span>=<span class="string">&quot;turtlesim&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">type</span>=<span class="string">&quot;turtle_teleop_key&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">name</span>=<span class="string">&quot;teleop_key&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">required</span>=<span class="string">&quot;true&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">launch</span> <span class="attr">-prefix</span>=<span class="string">&quot;xterm -e&quot;</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">node</span> </span></span><br><span class="line"><span class="tag"><span class="attr">pkg</span>=<span class="string">&quot;hello_world&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">type</span>=<span class="string">&quot;subpose&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">name</span>=<span class="string">&quot;pose_subscriber&quot;</span> </span></span><br><span class="line"><span class="tag"><span class="attr">output</span>=<span class="string">&quot;screen&quot;</span> </span></span><br><span class="line"><span class="tag">/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">launch</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>插入根元素\<launch>…\</launch></strong>，每个启动文件的其他元素都应该包含在这两个标签之内。</p>
+</li>
+<li><p><strong>启动节点</strong> </p>
+<p>\&lt;node</p>
+<p>pkg=”package-name”</p>
+<p>type=”executable-name”</p>
+<p>name=”node-name”<br>/&gt;</p>
+<p>其中：</p>
+<p><strong>pkg 和 type</strong>属性定义了 ROS 应该运行哪个程序来启动这个节点。这些和 rosrun 的两个命令行参数的作用是一致的，即给出功能包名和可执行文件的名称；</p>
+<p><strong>name</strong> 属性给节点指派了名称，它将覆盖任何通过调用 ros::init 来赋予节点的名称。</p>
+</li>
+<li><p><strong>在控制台中输出信息</strong>，对于某个单独的节点，只需在节点元素中配置 output 属性就可以达到该目的： <code>output=&quot;screen&quot;</code> </p>
+</li>
+<li><p><strong>请求复位</strong>，当节点停止的时候， roslaunch 会重新启动该节点： <code>respawn=&quot;true&quot;</code></p>
+</li>
+<li><p><strong>必要节点（requiring node） </strong>，复位之外的另一种策略是将一个节点声明为必要节点： <code>required=”true”</code> </p>
+<p>当一个必要节点终止的时候，roslaunch 会终止所有其他活跃节点并退出。</p>
+</li>
+<li><p><strong>为节点维护独立的窗口</strong>，对于依赖控制台输入的节点来说， 例如 turtle_teleop_key，更倾向于为节点保留独立的终端，可以使用对节点元素启动前缀（launch-prefix）属性： </p>
+<p><code>Launch-prefix=&quot;command-prefix&quot;</code> 。</p>
+<p>例如 <code>launch-prefix=&quot;xetrm-e&quot;</code> </p>
+</li>
+<li><p><strong>在命名空间内启动节点</strong>，节点元素支持对其配置ns命名空间属性。</p>
+</li>
+<li><p><strong>包含其他文件</strong>，如果想在启动文件中包含其他启动文件的内容（包括所有的节点和参数），可以使用包含（include）元素: </p>
+<p><code>&lt;include file=&quot;path-to-launch-file&quot;&gt;</code></p>
+<p>此处 file 属性的值应该是我们想包含的文件的完整路径。由于直接输入路径信息很繁琐且容易出错，大多数包含元素都使用 查找（find）命令搜索功能包的位置来替代直接输入路径：</p>
+<p><code>&lt;include file=&quot;&quot;$(find package-name)/launch-file-name&quot;&gt;</code></p>
+<p>也同样支持ns命名空间参数。</p>
+</li>
+<li><p><strong>执行启动文件</strong>，<code>roslaunch package-name launch-file-name</code> 。添加-v参数可以输出详细信息。</p>
+<h4 id="2）启动参数（launch-arguments）"><a href="#2）启动参数（launch-arguments）" class="headerlink" title="2）启动参数（launch arguments）"></a>2）启动参数（launch arguments）</h4></li>
+</ul>
+<p>​    为了使启动文件便于配置，roslaunch还支持启动参数，有时也简称为参数甚至args，其功能有点像可执行程序中的局部变 量。</p>
+<p>​    为了区分，parameter 是运行中的 ROS 系统使用的数值，存储在参数服务器（parameter server）中，每个活跃的节点都可 以通过 ros::param::get 函数来获取 parameter 的值，用户也 可以通过 rosparam 来获得 parameter 的值。 而 argument 只在启动文件内才有意义；他们的值是不能被节点直接获取的。</p>
+<ul>
+<li><p><strong>声明参数</strong>，<code>&lt;arg name=&quot;agr-name&quot;&gt;</code> 。</p>
+</li>
+<li><p><strong>参数赋值</strong> ，<code>roslaunch package-name launch-file-name arg-name:=arg-value</code> </p>
+<p>或 <code>&lt;arg name=”arg-name” default=”arg-value”/&gt;</code> </p>
+<p>或 <code>&lt;arg name=”arg-name” value=”arg-value”/&gt;</code> </p>
+<p>两者的唯一区别在于命令行参数可以覆盖默认值 default，但是不能覆盖参数值 value。由 value 设置的参数值是不能更改的。</p>
+</li>
+<li><p><strong>获取参数值</strong>，一旦参数值被声明并且被赋值，你就可以利用下面的 arg 替换（arg substitution）语法来使用该参数值了： <code>$(arg arg-name)</code> </p>
+</li>
+<li><p><strong>向包括的启动文件中发送参数值</strong>，只需要在\<include>和\</include>之间加入arg元素即可。但==在 include 标签之间的参数是属于被包含文件的，而不是它们出现的启动文件==。</p>
+<h4 id="3）创建组（Creating-groups）"><a href="#3）创建组（Creating-groups）" class="headerlink" title="3）创建组（Creating groups）"></a>3）创建组（Creating groups）</h4></li>
+</ul>
+<p>​    <strong>组(group)元素</strong>，提供了一种在大型启动文件内管理节点的便捷方式。</p>
+<p>​    组可以把若干个节点放入同一个命名空间内。 </p>
+<p>​    \<group ns="namespace"/></p>
+<p>​    …</p>
+<p>​    \&lt;/group&gt;</p>
+<p>​    如果一个组元素内的某个节点有它自己的命名空间属性， 并且其名称是（原则上也应该是）相对名称，那么该节点将会在一个默认命名空间内启动，这个默认的命名空间是将此节点命名空间嵌入到组元素命名空间的结果。</p>
+<p>​    但不能为组元素设置<code>output=&quot;screen&quot;</code>，必须直接为每一个我们想要应用它的节 点设置该属性。</p>
+<h3 id="六、参数"><a href="#六、参数" class="headerlink" title="六、参数"></a>六、参数</h3><p>​    ROS还提供另一种<strong>参数 （parameters）</strong>机制用于获取节点的信息。其主要思想是使用集中 参数服务器（parameter server）维护一个变量集的值，包括整数、 浮点数、字符串以及其他数据类型，每一个变量用一个较短的字符串标识 。由于允许节点主动查询其感兴趣的参数的值，它们适用于配置那些不会随时间频繁变更的信息。</p>
+<h4 id="1）通过命令行获取参数"><a href="#1）通过命令行获取参数" class="headerlink" title="1）通过命令行获取参数"></a>1）通过命令行获取参数</h4><p>​    <code>rosparam list</code> ，输出：</p>
+<p>/rosdistro </p>
+<p>/roslaunch/uris/host_donatello__38217 </p>
+<p>/rosversion </p>
+<p>/run_id</p>
+<p>参数服务器是节点管理器的一部分， 因此，它总是通过 roscore 或者 roslaunch 自动启动。</p>
+<p>​    <strong>查询参数</strong>，<code>rosparam get &lt;parameter_name&gt;</code> </p>
+<p>​    <strong>设置参数</strong>，<code>rosparam set &lt;parameter_name&gt; &lt;parameter_value&gt;</code> ，也可以以YAML字典形式设置多个参数。</p>
+<p>​    <strong>创建和加载参数文件</strong>，<code>rosparam dump filename namespace</code> <code>rosparam load filename namespace</code> 。</p>
+<h4 id="2）使用C-获取参数"><a href="#2）使用C-获取参数" class="headerlink" title="2）使用C++获取参数"></a>2）使用C++获取参数</h4><p>​    <code>void ros::param::set(parameter_name, input_value);</code> </p>
+<p>​    <code>bool ros::param::get(parameter_name, output_value);</code> </p>
+<p>​    两个函数分别用于设置和获取参数。</p>
+<h4 id="3）启动文件中设置参数"><a href="#3）启动文件中设置参数" class="headerlink" title="3）启动文件中设置参数"></a>3）启动文件中设置参数</h4><p>​    <code>&lt;param name=&quot;param-name&quot; value=&quot;param-value&quot; /&gt;</code> </p>
+<p>​    上面的元素设置参数，以下则读取参数：</p>
+<p>​    <code>&lt;rosparam command=&quot;load&quot; file=&quot;path-to-param-file&quot; /&gt;</code> </p>
+<h3 id="七、服务"><a href="#七、服务" class="headerlink" title="七、服务"></a>七、服务</h3><p>​    <strong>服务调用（service calls）</strong>是另一种用于通信的方法，与发布订阅的区别主要在于两点：</p>
+<p>​    服务调用是==双向的==，一个节点给另一个节点发送信息并等待响应，因此信息流是双向的；</p>
+<p>​    服务调用实现的是==一对一通信==。</p>
+<p>​    其过程是一个<strong>客户端（client）</strong>节点发送一些称为<strong>请求（request）</strong> 的数据到一个<strong>服务器（server）</strong>节点，并且等待回应。服务器节点接收到请求后，采取一些行动（计算、配置软件或硬件、改变 自身行为等），然后发送一些称为<strong>响应（response）</strong>的数据给客户端节点。 请求和响应数据携带的特定内容由<strong>服务数据类型（service data type）</strong>来决定，它与决定消息内容的消息类型是类似的</p>
+<h4 id="1）从命令行查看和调用服务"><a href="#1）从命令行查看和调用服务" class="headerlink" title="1）从命令行查看和调用服务"></a>1）从命令行查看和调用服务</h4><p>​    <strong>列出所有服务</strong>，<code>rosservice list</code> ，输出：</p>
+<p>/clear </p>
+<p>/kill </p>
+<p>/reset </p>
+<p>/rosout/get_loggers </p>
+<p>/rosout/set_logger_level </p>
+<p>/spawn </p>
+<p>/turtle1/set_pen </p>
+<p>/turtle1/teleport_absolute </p>
+<p>/turtle1/ teleport_relative </p>
+<p>/turtlesim/get_loggers /turtlesim/set_loggers_level</p>
+<p>​    很多 ROS 服务总的来讲可以划分为两个基本类型。 </p>
+<p>​    1）一些服务，例如上表中 get_loggers 和 set_logger_level 服务， 是用来从特定的节点获取或者向其传递信息的。</p>
+<p>​    2）其他服务表示更一般的不针对某些特定节点的服务。</p>
+<p>​    <strong>查找提供服务的节点</strong>，<code>rosservice &lt;node&gt; &lt;service-name&gt;</code> 。</p>
+<p>​    <strong>查找服务的数据类型</strong>， <code>rosservice info &lt;service-name&gt;</code> ，例如输出：</p>
+<p>​    Node: /turtlesim </p>
+<p>​    URI: rosrpc://Donatello:47441 </p>
+<p>​    Type: turtlesim/Spawn </p>
+<p>​    Args: x y theta name</p>
+<p>​    <strong>查看服务数据类型</strong>，<code>rossrv show &lt;service-data-type-name&gt;</code> ，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> rossrv show turtlesim/Spawn</span></span><br><span class="line"></span><br><span class="line">float32 x</span><br><span class="line">float32 y</span><br><span class="line">float 32 theta</span><br><span class="line">string name</span><br><span class="line">---</span><br><span class="line">string name</span><br></pre></td></tr></table></figure>
+<p>​    在这里，短横线（—-）之前的数据是请求项，这是客户节点发送到服务节点的信息。短横线之后的所有字段是响应项，或者说是服务节点完成请求后发送回请求节点的信息。</p>
+<p>​    <strong>从命令行调用服务</strong>，<code>rosservice call &lt;service-name&gt; &lt;request-content&gt;</code> 。</p>
+<h4 id="2）客户端程序（spawn-turtle-cpp）"><a href="#2）客户端程序（spawn-turtle-cpp）" class="headerlink" title="2）客户端程序（spawn_turtle.cpp）"></a>2）客户端程序（spawn_turtle.cpp）</h4><ul>
+<li><p><strong>声明请求和响应的类型</strong>，<code>#include&lt;package_name/type_name.h&gt;</code> ，例如 <code>#include&lt;turtlesim/Spawn.h&gt;</code> </p>
+</li>
+<li><p><strong>创建客户端对象</strong>，<code>ros::ServiceClient client = node_handle.serviceClient&lt;service_type&gt;( service_name);</code> ，其中：</p>
+<p>service_type是我们在上面头文件中定义的服务对象的数据类型；</p>
+<p>service_name是一个字符串，说明了我们想要调用的服务名称。</p>
+<p>注意，创建 ros::ServiceClient 对象不需要队列大小。之所以会造成这种差异，是因为服务调用直到响应抵达后才会返回。</p>
+</li>
+<li><p><strong>创建请求和响应对象</strong>，<code>package_name::service_type::Request</code> </p>
+<p><code>package_name::service_type::Response</code> 。每一个类都有数据成员匹配服务类型类型中的域。</p>
+</li>
+<li><p><strong>调用服务</strong>，<code>bool success = service_client.call(request,reponse);</code> ，这个方法实际上完成了定位服务器节点、传输请求数据、等待响应和存储响应数据等一系列工作。返回一个布尔值来表明服务调用是否成功完成。</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This program spawns a new turtlesim turtle by calling</span></span><br><span class="line"><span class="comment">// the appropriate service .</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// The srv class for the service .</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;turtlesim/Spawn.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc , <span class="keyword">char</span> ** argv )</span> </span>&#123;</span><br><span class="line">    ros::init( argc , argv , <span class="string">&quot;spawn_turtle&quot;</span>) ;</span><br><span class="line">    ros::NodeHandle nh ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create a client object for the spawn service . This</span></span><br><span class="line">    <span class="comment">// needs to know the data type of the service and its</span></span><br><span class="line">    <span class="comment">// name.</span></span><br><span class="line">    ros::ServiceClient spawnClient</span><br><span class="line">	= nh.serviceClient&lt;turtlesim::Spawn&gt;(<span class="string">&quot;spawn&quot;</span>) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Create the request and response objects.</span></span><br><span class="line">    turtlesim::Spawn::Request req ;</span><br><span class="line">    turtlesim::Spawn::Response resp ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Fill in the request data members.</span></span><br><span class="line">    req.x = <span class="number">2</span>;</span><br><span class="line">    req.y = <span class="number">3</span>;</span><br><span class="line">    req.theta = M_PI/<span class="number">2</span>;</span><br><span class="line">    req.name = <span class="string">&quot;Leo&quot;</span> ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Actually c a l l the service. This won&#x27;t return until</span></span><br><span class="line">    <span class="comment">// the service is complete .</span></span><br><span class="line">    <span class="keyword">bool</span> success = spawnClient.call( req , resp ) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check for success and use the response .</span></span><br><span class="line">    <span class="keyword">if</span>( success ) &#123;</span><br><span class="line">	ROS_INFO_STREAM(<span class="string">&quot;Spawned a turtle named &quot;</span></span><br><span class="line">	    &lt;&lt; resp.name) ;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	ROS_ERROR_STREAM(<span class="string">&quot;Failed to spawn.&quot;</span>) ;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="3）服务器程序（pubvel-toggle-cpp）"><a href="#3）服务器程序（pubvel-toggle-cpp）" class="headerlink" title="3）服务器程序（pubvel_toggle.cpp）"></a>3）服务器程序（pubvel_toggle.cpp）</h4><ul>
+<li><strong>编写服务回调函数</strong>，<code>bool function_name( package_name::service_type::Request &amp;req), package_name::service_type::Response &amp;resp) ) &#123; … &#125;</code> 输入参数为一个请求和一个响应对象。</li>
+<li><strong>创建服务器对象</strong>，<code>ros::ServiceServer server = node_handle.advertiseService( service_name,pointer_to_callback_function);</code> ，与订阅者类似。</li>
+<li><strong>提供 ROS 控制权</strong>，只有在我们通过 ros::spin()或 者 ros::spinOnce()请求时，ROS 才会执行回调函数。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// This program t oggles between rotation and translation</span></span><br><span class="line"><span class="comment">// commands, based on calls to a service .</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;ros/ros.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;std_srvs/Empty.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;geometry_msgs/Twist.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">bool</span> forward = <span class="literal">true</span> ;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">toggleForward</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">    std_srvs::Empty::Request &amp;req ,</span></span></span><br><span class="line"><span class="function"><span class="params">    std_srvs::Empty::Response &amp;resp</span></span></span><br><span class="line"><span class="function"><span class="params">    )</span> </span>&#123;</span><br><span class="line">    forward = !forward ;</span><br><span class="line">    ROS_INFO_STREAM(<span class="string">&quot;Now sending &quot;</span> &lt;&lt; ( forward ?</span><br><span class="line">	<span class="string">&quot;forward&quot;</span> : <span class="string">&quot;rotate&quot;</span>) &lt;&lt; <span class="string">&quot; commands.&quot;</span>) ;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">( <span class="keyword">int</span> argc , <span class="keyword">char</span> ** argv )</span> </span>&#123;</span><br><span class="line">    ros::init( argc , argv , <span class="string">&quot;pubvel_toggle&quot;</span>) ;</span><br><span class="line">    ros::NodeHandle nh ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Register our service with the master .</span></span><br><span class="line">    ros::ServiceServer server = nh.advertiseService(</span><br><span class="line">	<span class="string">&quot;toggle_forward&quot;</span> , &amp;toggleForward ) ;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Publish commands, using the latest value for forward ,</span></span><br><span class="line">    <span class="comment">// until the node shuts down.</span></span><br><span class="line">    ros::Publisher pub = nh.advertise&lt;geometry_msgs::Twist&gt;(</span><br><span class="line">	<span class="string">&quot;turtle1/cmd_vel&quot;</span> , <span class="number">1000</span>) ;</span><br><span class="line">    <span class="function">ros::Rate <span class="title">rate</span><span class="params">(<span class="number">2</span>)</span> </span>;</span><br><span class="line">    <span class="keyword">while</span> ( ros::ok() ) &#123;</span><br><span class="line">	geometry_msgs::Twist msg ;</span><br><span class="line">	msg.linear.x = forward ? <span class="number">1.0</span> : <span class="number">0.0</span> ;</span><br><span class="line">	msg.angular.z = forward ? <span class="number">0.0</span> : <span class="number">1.0</span> ;</span><br><span class="line">	pub.publish(msg) ;</span><br><span class="line">	ros::spinOnce() ;</span><br><span class="line">	rate.sleep() ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="八、自定义消息类型"><a href="#八、自定义消息类型" class="headerlink" title="八、自定义消息类型"></a>八、自定义消息类型</h3><p>​    其实并不难，wiki上也有更简明的教程，但初学为了把全程走一遍，也记录一番。</p>
+<h4 id="1-在软件包中创建msg文件夹"><a href="#1-在软件包中创建msg文件夹" class="headerlink" title="1)在软件包中创建msg文件夹"></a>1)在软件包中创建msg文件夹</h4><p>​    这个msg文件夹自己mkdir，专门用来存放自定义的.msg消息类型文件，类似于结构体。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int32 run_type</span><br><span class="line"><span class="built_in">string</span> testing</span><br></pre></td></tr></table></figure>
+<p>​    如上testing.msg文件的定义，数据类型可以使基本数据类型也可以是ROS中的其它已有的message类型，其后是该变量的名称。</p>
+<h4 id="2-添加配置"><a href="#2-添加配置" class="headerlink" title="2)添加配置"></a>2)添加配置</h4><p>​    然后，更改CMakeLists.txt文件：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(catkin REQUIRED COMPONENTS roscpp std_srvs std_msgs message_generation)</span><br><span class="line">add_message_files(FILES testing.msg)</span><br><span class="line">generate_messages(DEPENDENCIES std_msgs)</span><br><span class="line">catkin_package(CATKIN_DEPENDS roscpp std_msgs std_srvs message_runtime)</span><br></pre></td></tr></table></figure>
+<p>​    文件中其它与平时无异，这些句子都可以直接从生成好的文件中解注释得到。</p>
+<p>​    更改package.xml文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>std_msgs<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>std_msgs<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>std_srvs<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>std_srvs<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">exec_depend</span>&gt;</span>message_generation<span class="tag">&lt;/<span class="name">exec_depend</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build_depend</span>&gt;</span>message_generation<span class="tag">&lt;/<span class="name">build_depend</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="3-进行编译并生成-h头文件"><a href="#3-进行编译并生成-h头文件" class="headerlink" title="3)进行编译并生成.h头文件"></a>3)进行编译并生成.h头文件</h4><p>​    这里我采用的命令是：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">catkin_make -DCATKIN_WHITELIST_PACKAGES=<span class="string">&quot;&lt;package-name&gt;&quot;</span></span><br><span class="line">source devel/setup.bash</span><br></pre></td></tr></table></figure>
+<p>​    第一句软件包的编译白名单，只编译已添加的包。</p>
+<p>​    这步成功之后就可以在\<workspace>/devel/include/\<package-name>/目录下找到相应的.h头文件。</p>
+<h4 id="4-使用"><a href="#4-使用" class="headerlink" title="4)使用"></a>4)使用</h4><p>​    这个自定义的类已经可以像ROS自带的消息类一样引用使用了，比如：</p>
+<p>​    <code>#include&lt;FSM/FSM_Msg.h&gt;</code></p>
+<p>​    <code>FSM::FSM_Msg msg;</code></p>
+<p>​    这里在同一个包内发布和订阅message不再多说，可以参考前文。</p>
+<p>​    注：初学时易忘，话题其实不用自定义，想把自己的自定义消息类型发布到自建的话题上，只需要像 <code>ros::Publisher pub=nh.advertise&lt;FSM::FSM_Msg&gt;(&quot;/FSM_Msg&quot;, 1000);</code> 一样声明一个名称合适的话题即可。</p>
+<h4 id="5-另一个软件包引用这个消息类"><a href="#5-另一个软件包引用这个消息类" class="headerlink" title="5)另一个软件包引用这个消息类"></a>5)另一个软件包引用这个消息类</h4><p>​    其实没有任何区别，之前的步骤3)已经创建好了.h文件，故而引用使用与同一个包内无异。</p>
+<h2 id="End"><a href="#End" class="headerlink" title="End"></a>End</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiyu3816.github.io/2020/11/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" data-id="ckhmssj1k00070ssf8tjmal6b" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-IdeaPad14Settings" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/02/IdeaPad14Settings/" class="article-date">
+  <time datetime="2020-11-02T01:09:15.324Z" itemprop="datePublished">2020-11-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/02/IdeaPad14Settings/">IdeaPad14新电脑Ubuntu配置过程中的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2020\09\10</p>
+<h2 id="IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）"><a href="#IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）" class="headerlink" title="IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）"></a>IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）</h2><p>​    买新电脑后安装Ubuntu双系统，开始一系列基本配置。</p>
+<p>​    包括：</p>
+<ul>
+<li>安装opencv， <code>sudo apt-get install libopencv-dev</code> </li>
+<li><p>安装boost， <code>sudo apt-get install libboost-dev</code> </p>
+</li>
+<li><p>安装cmake，直接apt-get</p>
+</li>
+<li>安装vim并编辑配置文件，直接apt-get，~/.vimrc配置文件已备份到移动硬盘中</li>
+<li>配置全局默认consolas字体，</li>
+<li>安装zsh，后安装ohmyzsh，前者apt-get，后者用官网的命令连接失败，直接上github官方仓库<a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh">链接</a>下载，然后 <code>sudo ./tools/install.sh</code> 即可安装</li>
+<li>zsh主题配置，我选择agnoster主题，在~/.zshrc配置文件中找到 <code>ZSH_THEME</code> 项更改即可</li>
+<li>安装tmux并配置个性化，直接apt-get，然后进~/.tmux.conf编辑，已备份到移动硬盘</li>
+<li>更改静态ip，先编辑好/etc/network/interfaces文件，因为没有网线接口，用转换器接，每次接都须重新 <code>sudo /etc/init/d/networkings restart</code> </li>
+<li>解决中途WiFi列表no network的问题，这里参照<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42107473/article/details/109158259">博客</a>和其中的<a target="_blank" rel="noopener" href="https://github.com/lwfinger/rtw88">GitHub网址</a>安装了rtw88驱动，成功解决，文件已备份到移动硬盘中</li>
+<li>解决触控板失灵问题（已失败），无论是安装驱动还是重载模块，全都没用</li>
+<li>安装ROS，没有自己瞎搞，全程参照Wiki教程</li>
+<li>安装vscode，照官网命令行安装</li>
+<li>安装typora，照官网命令行安装</li>
+</ul>
+<h2 id="End"><a href="#End" class="headerlink" title="End"></a>End</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiyu3816.github.io/2020/11/02/IdeaPad14Settings/" data-id="ckhmssj1300010ssfgiv45vab" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ARCCV_finaltask" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/10/23/ARCCV_finaltask/" class="article-date">
@@ -220,7 +607,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/10/23/ARCCV_finaltask/" data-id="ckglp8oq300054wsf2qxo3oo7" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/10/23/ARCCV_finaltask/" data-id="ckhmssj1h00060ssf2deee3aq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -273,8 +660,9 @@
 </li>
 <li><p>在导航和目标跟踪中卡尔曼滤波常被用来做位置估计，比如匀速直线运动和匀加速直线运动，x和y方向上的运动就被微分近似为匀速直线运动，如下：</p>
 <script type="math/tex; mode=display">
-\begin{bmatrix}1,0,\Delta t,0\\ 0,1,0,\Delta t\\ 0,0,1,0\\ 0,0,0,1\end{bmatrix} \begin{bmatrix}1,\Delta t,\cfrac{\Delta t^2}{2} \\ 0,1,0 \\ 0,0,1\end{bmatrix}</script></li>
+\begin{bmatrix}1,0,\Delta t,0\\ 0,1,0,\Delta t\\ 0,0,1,0\\ 0,0,0,1\end{bmatrix} \begin{bmatrix}1,\Delta t,\cfrac{\Delta t^2}{2} \\ 0,1,0 \\ 0,0,1\end{bmatrix}s</script></li>
 </ol>
+<p>​    </p>
 <p>​        $\pmb B$ 是控制变量矩阵，表示控制变量转换到当前预测值的方式，即<em>KalmanFilter.controlMatrix</em>，类型Mat(n×g)。</p>
 <p>​        $\widehat P_{k-1}$ 是上一轮的协方差矩阵，反映的是状态向量中各变量间的相关度，故也为对称矩阵即<em>KalmanFilter.errorCovPost</em>，类型Mat(n×n)。</p>
 <p>​        $\pmb Q$ 是协方差过程噪声，因为协方差矩阵 $\widehat P_{k-1}$ 需要每轮更新，其过程中的误差由 $\pmb Q$ 表示，即<em>KalmanFilter.processNoiseCov</em>，类型Mat(n×n)。</p>
@@ -302,7 +690,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/10/07/KalmanMouseTrack/" data-id="ckglp8opw00024wsff23pfbtl" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/10/07/KalmanMouseTrack/" data-id="ckhmssj1700040ssf13xq7cud" class="article-share-link">Share</a>
       
       
     </footer>
@@ -358,7 +746,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/09/10/sklearn_snippet/" data-id="ckglp8oq200044wsf25ota6s5" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/09/10/sklearn_snippet/" data-id="ckhmssj1g00050ssf4dhl1uzk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -408,7 +796,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/09/04/Python-Spider/" data-id="ckglp8opn00004wsf79xud2r3" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/09/04/Python-Spider/" data-id="ckhmssj1500020ssfa6pph2dd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -460,7 +848,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/09/02/SIFT_SURT_Setting/" data-id="ckglp8opx00034wsf09v64vyb" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/09/02/SIFT_SURT_Setting/" data-id="ckhmssj1600030ssf6tre80vz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -500,7 +888,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://qiyu3816.github.io/2020/08/31/C++Big_int/" data-id="ckglp8opu00014wsffjjjdicf" class="article-share-link">Share</a>
+      <a data-url="http://qiyu3816.github.io/2020/08/31/C++Big_int/" data-id="ckhmssj0w00000ssf59v14u6t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -528,7 +916,7 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
     </div>
   </div>
 
@@ -541,6 +929,14 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
       <ul>
         
           <li>
+            <a href="/2020/11/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">ROS学习记录</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/02/IdeaPad14Settings/">IdeaPad14新电脑Ubuntu配置过程中的问题</a>
+          </li>
+        
+          <li>
             <a href="/2020/10/23/ARCCV_finaltask/">WMJ考核finaltask学习报告</a>
           </li>
         
@@ -550,14 +946,6 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
         
           <li>
             <a href="/2020/09/10/sklearn_snippet/">sklearn杂项</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/04/Python-Spider/">Python Spider</a>
-          </li>
-        
-          <li>
-            <a href="/2020/09/02/SIFT_SURT_Setting/">SIFT&amp;SURF Setting</a>
           </li>
         
       </ul>
@@ -605,21 +993,5 @@ g(x)=w_1x_1 + w_2x_2 + w_3x_3 + ... + w_nx_n + w_0</script><p>理解为：</p>
 
 
   </div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
 </body>
 </html>

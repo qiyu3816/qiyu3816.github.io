@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>IdeaPad14新电脑Ubuntu配置过程中的问题 | Purposeful</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="2020\09\10 IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）​    买新电脑后安装Ubuntu双系统，开始一系列基本配置。 ​    包括：  安装opencv， sudo apt-get install libopencv-dev  安装boost， sudo apt-get install libboost-dev   安装cmake，直接apt-get  安装vi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IdeaPad14新电脑Ubuntu配置过程中的问题">
+<meta property="og:url" content="http://qiyu3816.github.io/2020/11/02/IdeaPad14Settings/index.html">
+<meta property="og:site_name" content="Purposeful">
+<meta property="og:description" content="2020\09\10 IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）​    买新电脑后安装Ubuntu双系统，开始一系列基本配置。 ​    包括：  安装opencv， sudo apt-get install libopencv-dev  安装boost， sudo apt-get install libboost-dev   安装cmake，直接apt-get  安装vi">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-02T01:09:15.324Z">
+<meta property="article:modified_time" content="2020-11-02T04:22:05.897Z">
+<meta property="article:author" content="qiyu3816">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Purposeful" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Purposeful</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://qiyu3816.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-IdeaPad14Settings" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/02/IdeaPad14Settings/" class="article-date">
+  <time datetime="2020-11-02T01:09:15.324Z" itemprop="datePublished">2020-11-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      IdeaPad14新电脑Ubuntu配置过程中的问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>2020\09\10</p>
+<h2 id="IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）"><a href="#IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）" class="headerlink" title="IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）"></a>IdeaPad14新电脑Ubuntu配置过程中的问题（个人笔记）</h2><p>​    买新电脑后安装Ubuntu双系统，开始一系列基本配置。</p>
+<p>​    包括：</p>
+<ul>
+<li>安装opencv， <code>sudo apt-get install libopencv-dev</code> </li>
+<li><p>安装boost， <code>sudo apt-get install libboost-dev</code> </p>
+</li>
+<li><p>安装cmake，直接apt-get</p>
+</li>
+<li>安装vim并编辑配置文件，直接apt-get，~/.vimrc配置文件已备份到移动硬盘中</li>
+<li>配置全局默认consolas字体，</li>
+<li>安装zsh，后安装ohmyzsh，前者apt-get，后者用官网的命令连接失败，直接上github官方仓库<a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh">链接</a>下载，然后 <code>sudo ./tools/install.sh</code> 即可安装</li>
+<li>zsh主题配置，我选择agnoster主题，在~/.zshrc配置文件中找到 <code>ZSH_THEME</code> 项更改即可</li>
+<li>安装tmux并配置个性化，直接apt-get，然后进~/.tmux.conf编辑，已备份到移动硬盘</li>
+<li>更改静态ip，先编辑好/etc/network/interfaces文件，因为没有网线接口，用转换器接，每次接都须重新 <code>sudo /etc/init/d/networkings restart</code> </li>
+<li>解决中途WiFi列表no network的问题，这里参照<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42107473/article/details/109158259">博客</a>和其中的<a target="_blank" rel="noopener" href="https://github.com/lwfinger/rtw88">GitHub网址</a>安装了rtw88驱动，成功解决，文件已备份到移动硬盘中</li>
+<li>解决触控板失灵问题（已失败），无论是安装驱动还是重载模块，全都没用</li>
+<li>安装ROS，没有自己瞎搞，全程参照Wiki教程</li>
+<li>安装vscode，照官网命令行安装</li>
+<li>安装typora，照官网命令行安装</li>
+</ul>
+<h2 id="End"><a href="#End" class="headerlink" title="End"></a>End</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://qiyu3816.github.io/2020/11/02/IdeaPad14Settings/" data-id="ckhmssj1300010ssfgiv45vab" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/11/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ROS学习记录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/10/23/ARCCV_finaltask/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">WMJ考核finaltask学习报告</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/11/18/ROS%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">ROS学习记录</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/02/IdeaPad14Settings/">IdeaPad14新电脑Ubuntu配置过程中的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/23/ARCCV_finaltask/">WMJ考核finaltask学习报告</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/07/KalmanMouseTrack/">Kalman鼠标追踪</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/10/sklearn_snippet/">sklearn杂项</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 qiyu3816<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
