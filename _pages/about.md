@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: ""
+title: "Ruihuai Liang | Homepage"
 excerpt: ""
 author_profile: true
 redirect_from: 
@@ -15,7 +15,9 @@ redirect_from:
 {% endif %}
 {% assign url = gsDataBaseUrl | append: "google-scholar-stats/gs_data_shieldsio.json" %}
 
-<span class='anchor' id='about-me'></span>
+<span class='anchor' id='about-me'>**NETWORKING BY GENERATION, OPTIMIZING WITH DIFFUSION**
+
+I am currently a PhD. student in Computer Science at [HCPS Lab](https://hcps.nwpu.edu.cn/index.htm) and [NPU-IWC Lab](https://wangxn2.github.io/group_web.github.io/), Northwestern Polytechnical University, advised by [Prof. Bo Yang](https://teacher.nwpu.edu.cn/yangbo.html).</span>
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare aliquet ipsum, ac tempus justo dapibus sit amet. Suspendisse condimentum, libero vel tempus mattis, risus risus vulputate libero, elementum fermentum mi neque vel nisl. Maecenas facilisis maximus dignissim. Curabitur mattis vulputate dui, tincidunt varius libero luctus eu. Mauris mauris nulla, scelerisque eget massa id, tincidunt congue felis. Sed convallis tempor ipsum rhoncus viverra. Pellentesque nulla orci, accumsan volutpat fringilla vitae, maximus sit amet tortor. Aliquam ultricies odio ut volutpat scelerisque. Donec nisl nisl, porttitor vitae pharetra quis, fringilla sed mi. Fusce pretium dolor ut aliquam consequat. Cras volutpat, tellus accumsan mattis molestie, nisl lacus tempus massa, nec malesuada tortor leo vel quam. Aliquam vel ex consectetur, vehicula leo nec, efficitur eros. Donec convallis non urna quis feugiat.
 
