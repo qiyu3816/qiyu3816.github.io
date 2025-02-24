@@ -7,7 +7,7 @@
 
 # Site Settings
 title                    : "Ruihuai Liang"
-description              : "tmp"
+description              : "PhD. student in Computer Science, Northwestern Polytechnical University"
 repository               : "qiyu3816/qiyu3816.github.io"
 google_scholar_stats_use_cdn : 1EZKsh4AAAAJ
 
@@ -23,7 +23,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 author:
   name             : "Ruihuai Liang"
   avatar           : "images/LRH_profile.jpg"
-  bio              : "PhD. student in Computer Science, Northwestern Polytechnical University"
+  bio              : "<img src='./images/NWPU.png' style='width: 8em;'>"
   location         : "Xi'an, China"
   employer         : 
   pubmed           : 
