@@ -22,7 +22,7 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 # Site Author
 author:
   name             : "Ruihuai Liang"
-  avatar           : "images/LRH-profile.jpg"
+  avatar           : "images/LRH_profile.jpg"
   bio              : "Northwestern Polytechnical University"
   location         : "Xi'an, China"
   employer         :
