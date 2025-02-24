@@ -23,9 +23,9 @@ baidu_site_verification  :  # get baidu_site_verification from https://ziyuan.ba
 author:
   name             : "Ruihuai Liang"
   avatar           : "images/LRH_profile.jpg"
-  bio              : "PhD. student in Computer Science"
+  bio              : "PhD. student in Computer Science, Northwestern Polytechnical University"
   location         : "Xi'an, China"
-  employer         : "Northwestern Polytechnical University"
+  employer         : 
   pubmed           : 
   googlescholar    : "https://scholar.google.com/citations?user=1EZKsh4AAAAJ"
   email            : "liangruihuai_npu@mail.nwpu.edu.cn"
