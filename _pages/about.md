@@ -16,7 +16,7 @@ redirect_from:
 {% assign url = gsDataBaseUrl | append: "google-scholar-stats/gs_data_shieldsio.json" %}
 
 <span class='anchor' id='about-me'></span>
-<h1 style="font-family: 'Trajan', serif; font-size: 22px; text-decoration: none; border-bottom: none;">NETWORKING BY GENERATION &nbsp; OPTIMIZING WITH DIFFUSION</h1>
+<h1 style="font-family: 'Trajan', serif; font-size: 22px; text-decoration: none; border-bottom: none;">NETWORKING BY GENERATION&nbsp;OPTIMIZING WITH DIFFUSION</h1>
 
 Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://hcps.nwpu.edu.cn/index.htm) and [NPU-IWC Lab](https://wangxn2.github.io/group_web.github.io/), Northwestern Polytechnical University, advised by [Prof. Bo Yang](https://teacher.nwpu.edu.cn/yangbo.html).
 
@@ -72,7 +72,7 @@ R. Liang, B. Yang, Z. Yu, X. Cao, D. W. K. Ng and C. Yuen, "[A Multi-Head Ensemb
 - 2022.07-2022.08, **Intern**, Huawei Public Development Department, Xi'an
 
 
-# 🎖 Honors and Awards
+# <svg t="1740367613967" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="44437" width="200" height="200"><path d="M184.32 678.4l-125.44 125.44c-10.24 10.24-2.56 30.72 12.8 30.72h112.64c2.56 0 2.56 2.56 2.56 2.56v112.64c0 15.36 20.48 23.04 30.72 12.8l151.04-151.04c2.56-2.56 0-5.12-2.56-5.12-71.68-25.6-133.12-71.68-179.2-130.56 0 0-2.56 0-2.56 2.56zM962.56 803.84l-125.44-125.44h-5.12c-46.08 58.88-110.08 102.4-181.76 130.56-2.56 0-2.56 2.56 0 5.12l151.04 151.04c10.24 10.24 28.16 2.56 30.72-12.8v-115.2c0-2.56 2.56-2.56 2.56-2.56h115.2c15.36 0 23.04-17.92 12.8-30.72z" fill="#FFB029" p-id="44438"></path><path d="M512 48.64c-207.36 0-373.76 166.4-373.76 373.76S304.64 796.16 512 796.16s373.76-166.4 373.76-373.76S719.36 48.64 512 48.64z m-102.4 107.52c5.12-2.56 10.24-5.12 15.36-5.12 7.68-2.56 12.8 0 17.92 7.68 2.56 7.68 0 12.8-7.68 17.92-5.12 2.56-7.68 2.56-12.8 5.12h-5.12c-5.12 0-10.24-2.56-12.8-7.68-2.56-7.68 0-15.36 5.12-17.92z m-117.76 143.36c-2.56 5.12-7.68 7.68-10.24 7.68-2.56 0-5.12 0-5.12-2.56-5.12-2.56-7.68-10.24-5.12-17.92 23.04-40.96 56.32-79.36 97.28-104.96 2.56-5.12 12.8-2.56 15.36 2.56 5.12 5.12 2.56 12.8-2.56 17.92-35.84 25.6-66.56 58.88-89.6 97.28z m363.52 89.6l-56.32 53.76c-2.56 2.56-5.12 7.68-5.12 12.8l12.8 76.8c2.56 12.8-10.24 20.48-20.48 15.36L519.68 512c-5.12-2.56-10.24-2.56-12.8 0L435.2 547.84c-10.24 5.12-23.04-2.56-20.48-15.36l12.8-76.8c0-5.12 0-10.24-5.12-12.8l-56.32-53.76c-7.68-7.68-5.12-23.04 7.68-25.6l76.8-10.24c5.12 0 10.24-2.56 10.24-7.68l33.28-69.12c5.12-10.24 20.48-10.24 25.6 0l33.28 69.12c2.56 5.12 5.12 7.68 10.24 7.68l76.8 10.24c20.48 2.56 25.6 17.92 15.36 25.6z" fill="#FFB029" p-id="44439"></path></svg> Honors and Awards
 - 2024.10, **National Scholarship for Master's Students**
 - 2023.06, **Outstanding Undergraduate of School**
 
