@@ -60,6 +60,11 @@ Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://h
 [GDSG](https://github.com/qiyu3816/GDSG) \| [MSMU-CO](https://github.com/qiyu3816/MSMU-CO) \| [DiffSG](https://github.com/qiyu3816/DiffSG) \| [MTFNN-CO](https://github.com/qiyu3816/MTFNN-CO)
 
 
+# <svg t="1740987648074" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7714" width="200" height="200"><path d="M852.44 663.17H171.56c-49.71 0-90-40.29-90-90V152c0-49.71 40.29-90 90-90h680.87c49.71 0 90 40.29 90 90v421.17c0.01 49.71-40.29 90-89.99 90z" fill="#FF554D" p-id="7715"></path><path d="M224.61 962c-7.7 0-15.46-2.25-22.26-6.97-17.77-12.32-22.16-36.7-9.86-54.45l112.02-161.49c12.3-17.79 36.68-22.18 54.45-9.86 17.77 12.32 22.16 36.7 9.86 54.45L256.8 945.17c-7.6 10.96-19.79 16.83-32.19 16.83zM825.13 962c-12.4 0-24.59-5.87-32.19-16.83L680.9 783.68c-12.3-17.75-7.91-42.13 9.86-54.45 17.73-12.32 42.13-7.93 54.45 9.86l112.04 161.49c12.3 17.75 7.91 42.13-9.86 54.45a38.879 38.879 0 0 1-22.26 6.97z" fill="#B2150A" p-id="7716"></path><path d="M864.17 800.51H159.82c-21.61 0-39.13-17.52-39.13-39.13 0-21.61 17.52-39.13 39.13-39.13h704.35c21.61 0 39.13 17.52 39.13 39.13 0 21.61-17.52 39.13-39.13 39.13z" fill="#FF4F4F" p-id="7717"></path><path d="M601.18 331.32L470.52 229.33c-26.04-20.33-64.06-1.77-64.06 31.26v203.98c0 33.04 38.02 51.59 64.06 31.26l130.66-101.99c20.35-15.87 20.35-46.64 0-62.52z" fill="#FFFFFF" p-id="7718"></path></svg> Related Reports
+
+["AI Solver Engines as Network Optimizers"](https://ieeemeetings.webex.com/recordingservice/sites/ieeemeetings/recording/2beb75865a8e4dbc8e6bbbddaf6c0d6c/playback) by Prof. Mérouane Debbah in Artificial Intelligence / Machine Learning Working Group on 2025.01.16
+
+
 # 📖 Educations
 
 - 2025.02 - 2029.01 (expected), **PhD. student**, Computer Science, Northwestern Polytechnical University
