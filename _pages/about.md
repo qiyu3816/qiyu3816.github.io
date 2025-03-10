@@ -36,7 +36,7 @@ Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://h
 
 *Ruihuai Liang*, Bo Yang, Pengyu Chen, Xianjin Li, Yifan Xue, Zhiwen Yu, Xuelin Cao, Yan Zhang, Mérouane Debbah, H Vincent Poor, Chau Yuen, "[Diffusion Models as Network Optimizers: Explorations and Analysis](https://arxiv.org/abs/2411.00453)," in <span style="color: green;">**IEEE Internet of Things Journal** (JCR Q1, 中科院一区TOP)</span>, doi: 10.1109/JIOT.2025.3528955.
 
-*Ruihuai Liang*, Bo Yang, Zhiwen Yu, Bin Guo, Xuelin Cao, Mérouane Debbah, H Vincent Poor, Chau Yuen. "[DiffSG: A generative solver for network optimization with diffusion model](https://arxiv.org/abs/2408.06701)." arXiv preprint arXiv:2408.06701 (2024). <span style="color: blue;">IEEE COMM. MAG. Major Revised</span>
+*Ruihuai Liang*, Bo Yang, Zhiwen Yu, Bin Guo, Xuelin Cao, Mérouane Debbah, H Vincent Poor, Chau Yuen. "[DiffSG: A generative solver for network optimization with diffusion model](https://arxiv.org/abs/2408.06701)." arXiv preprint arXiv:2408.06701 (2024). <span style="color: blue;">Accepted by IEEE Communications Magazine</span>
 
 *Ruihuai Liang*, Bo Yang, Zhiwen Yu, Xuelin Cao, Derrick Wing Kwan Ng, Chau Yuen, "[A Multi-Head Ensemble Multi-Task Learning Approach for Dynamical Computation Offloading](https://ieeexplore.ieee.org/abstract/document/10437346)," **GLOBECOM 2023 - 2023 IEEE Global Communications Conference**, Kuala Lumpur, Malaysia, 2023, pp. 6079-6084.
 
@@ -60,9 +60,11 @@ Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://h
 [GDSG](https://github.com/qiyu3816/GDSG) \| [MSMU-CO](https://github.com/qiyu3816/MSMU-CO) \| [DiffSG](https://github.com/qiyu3816/DiffSG) \| [MTFNN-CO](https://github.com/qiyu3816/MTFNN-CO)
 
 
-# <svg t="1740987648074" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7714" width="200" height="200"><path d="M852.44 663.17H171.56c-49.71 0-90-40.29-90-90V152c0-49.71 40.29-90 90-90h680.87c49.71 0 90 40.29 90 90v421.17c0.01 49.71-40.29 90-89.99 90z" fill="#FF554D" p-id="7715"></path><path d="M224.61 962c-7.7 0-15.46-2.25-22.26-6.97-17.77-12.32-22.16-36.7-9.86-54.45l112.02-161.49c12.3-17.79 36.68-22.18 54.45-9.86 17.77 12.32 22.16 36.7 9.86 54.45L256.8 945.17c-7.6 10.96-19.79 16.83-32.19 16.83zM825.13 962c-12.4 0-24.59-5.87-32.19-16.83L680.9 783.68c-12.3-17.75-7.91-42.13 9.86-54.45 17.73-12.32 42.13-7.93 54.45 9.86l112.04 161.49c12.3 17.75 7.91 42.13-9.86 54.45a38.879 38.879 0 0 1-22.26 6.97z" fill="#B2150A" p-id="7716"></path><path d="M864.17 800.51H159.82c-21.61 0-39.13-17.52-39.13-39.13 0-21.61 17.52-39.13 39.13-39.13h704.35c21.61 0 39.13 17.52 39.13 39.13 0 21.61-17.52 39.13-39.13 39.13z" fill="#FF4F4F" p-id="7717"></path><path d="M601.18 331.32L470.52 229.33c-26.04-20.33-64.06-1.77-64.06 31.26v203.98c0 33.04 38.02 51.59 64.06 31.26l130.66-101.99c20.35-15.87 20.35-46.64 0-62.52z" fill="#FFFFFF" p-id="7718"></path></svg> Related Reports
+# <svg t="1741567329105" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13558" width="200" height="200"><path d="M927.744 717.824l-454.656 262.656c-49.152 28.16-111.616 11.264-139.776-37.376L70.656 488.448c-28.16-49.152-11.264-111.616 37.376-139.776l116.736-67.584c-60.416-40.96-76.8-123.392-35.328-184.32S312.832 20.48 373.76 61.44c33.792 23.04 55.296 59.904 57.856 100.352L563.2 86.016c49.152-28.16 111.616-11.264 139.776 37.376l74.24 129.024c-73.216 1.536-131.072 62.464-129.536 135.68 1.536 73.216 62.464 131.072 135.68 129.536 45.056-1.024 86.528-25.088 110.08-63.488l71.68 123.904c28.672 49.152 11.776 111.616-37.376 139.776z" fill="#d4237a" p-id="13559"></path></svg> Participation in Related Projects
 
 ["AI Solver Engines as Network Optimizers"](https://ieeemeetings.webex.com/recordingservice/sites/ieeemeetings/recording/2beb75865a8e4dbc8e6bbbddaf6c0d6c/playback) by Prof. Mérouane Debbah in Artificial Intelligence / Machine Learning Working Group on 2025.01.16
+
+["Large-Scale AI in Telecom: Charting the Roadmap for Innovation, Scalability, and Enhanced Digital Experiences"](https://arxiv.org/abs/2503.04184) by GenAINet Emerging Technology Initiative
 
 
 # 📖 Educations
