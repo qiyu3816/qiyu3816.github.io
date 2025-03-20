@@ -34,7 +34,7 @@ Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://h
 
 *Ruihuai Liang*, Bo Yang, Pengyu Chen, Zhiwen Yu, Xuelin Cao, Mérouane Debbah, H Vincent Poor, Chau Yuen. "[GDSG: Graph Diffusion-based Solution Generation for Optimization Problems in MEC Networks](https://arxiv.org/abs/2412.08296)." arXiv preprint arXiv:2412.08296 (2024). <span style="color: blue;">IEEE TMC Under Major Revision</span>
 
-*Ruihuai Liang*, Bo Yang, Pengyu Chen, Xianjin Li, Yifan Xue, Zhiwen Yu, Xuelin Cao, Yan Zhang, Mérouane Debbah, H Vincent Poor, Chau Yuen, "[Diffusion Models as Network Optimizers: Explorations and Analysis](https://arxiv.org/abs/2411.00453)," in <span style="color: green;">**IEEE Internet of Things Journal** (JCR Q1, 中科院一区TOP)</span>, doi: 10.1109/JIOT.2025.3528955.
+*Ruihuai Liang*, Bo Yang, Pengyu Chen, Xianjin Li, Yifan Xue, Zhiwen Yu, Xuelin Cao, Yan Zhang, Mérouane Debbah, H Vincent Poor, Chau Yuen, "[Diffusion Models as Network Optimizers: Explorations and Analysis](https://arxiv.org/abs/2411.00453)," in <span style="color: green;">**IEEE Internet of Things Journal**</span>, doi: 10.1109/JIOT.2025.3528955.
 
 *Ruihuai Liang*, Bo Yang, Zhiwen Yu, Bin Guo, Xuelin Cao, Mérouane Debbah, H Vincent Poor, Chau Yuen. "[DiffSG: A generative solver for network optimization with diffusion model](https://arxiv.org/abs/2408.06701)." arXiv preprint arXiv:2408.06701 (2024). <span style="color: blue;">Accepted by IEEE Communications Magazine</span>
 
