@@ -16,7 +16,6 @@ redirect_from:
 {% assign url = gsDataBaseUrl | append: "google-scholar-stats/gs_data_shieldsio.json" %}
 
 <span class='anchor' id='about-me'></span>
-<h1 style="font-family: 'Trajan', serif; font-size: 22px; text-decoration: none; border-bottom: none;">NETWORKING BY GENERATION, OPTIMIZING WITH DIFFUSION</h1>
 
 Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://hcps.nwpu.edu.cn/index.htm) and [NPU-IWC Lab](https://wangxn2.github.io/group_web.github.io/), Northwestern Polytechnical University, advised by [Prof. Bo Yang](https://teacher.nwpu.edu.cn/yangbo.html).
 
