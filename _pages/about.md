@@ -33,9 +33,9 @@ Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://h
 
 *Ruihuai Liang*, Bo Yang, Pengyu Chen, Xuelin Cao, Zhiwen Yu, H Vincent Poor, Chau Yuen. "[Cross-Problem Solving for Network Optimization: Is Problem-Aware Learning the Key?](https://arxiv.org/abs/2505.05067)" arXiv preprint arXiv:2505.05067 (2025).
 
-*Ruihuai Liang*, Bo Yang, Pengyu Chen, Xuelin Cao, Zhiwen Yu, Mérouane Debbah, Dusit Niyato, H Vincent Poor, Chau Yuen. "[GDSG: Graph Diffusion-based Solution Generator for Optimization Problems in MEC Networks](https://arxiv.org/abs/2412.08296)." arXiv preprint arXiv:2412.08296 (2024). <span style="color: blue;">Accepted by IEEE Transactions on Mobile Computing</span>
+*Ruihuai Liang*, Bo Yang, Pengyu Chen, Xuelin Cao, Zhiwen Yu, Mérouane Debbah, Dusit Niyato, H Vincent Poor, Chau Yuen. "[GDSG: Graph Diffusion-based Solution Generator for Optimization Problems in MEC Networks](https://arxiv.org/abs/2412.08296)." in <span style="color: green;">**IEEE Transactions on Mobile Computing**</span>, doi: 10.1109/TMC.2025.3568248.
 
-*Ruihuai Liang*, Bo Yang, Pengyu Chen, Xianjin Li, Yifan Xue, Zhiwen Yu, Xuelin Cao, Yan Zhang, Mérouane Debbah, H Vincent Poor, Chau Yuen, "[Diffusion Models as Network Optimizers: Explorations and Analysis](https://arxiv.org/abs/2411.00453)," in <span style="color: green;">**IEEE Internet of Things Journal**</span>, doi: 10.1109/JIOT.2025.3528955.
+*Ruihuai Liang*, Bo Yang, Pengyu Chen, Xianjin Li, Yifan Xue, Zhiwen Yu, Xuelin Cao, Yan Zhang, Mérouane Debbah, H Vincent Poor, Chau Yuen, "[Diffusion Models as Network Optimizers: Explorations and Analysis](https://arxiv.org/abs/2411.00453)," in **IEEE Internet of Things Journal, doi: 10.1109/JIOT.2025.3528955.
 
 *Ruihuai Liang*, Bo Yang, Zhiwen Yu, Bin Guo, Xuelin Cao, Mérouane Debbah, H Vincent Poor, Chau Yuen. "[DiffSG: A generative solver for network optimization with diffusion model](https://arxiv.org/abs/2408.06701)." arXiv preprint arXiv:2408.06701 (2024). <span style="color: blue;">Accepted by IEEE Communications Magazine</span>
 
