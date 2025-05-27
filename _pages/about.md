@@ -67,6 +67,7 @@ Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://h
 
 ["Large-Scale AI in Telecom: Charting the Roadmap for Innovation, Scalability, and Enhanced Digital Experiences"](https://arxiv.org/abs/2503.04184) by GenAINet Emerging Technology Initiative
 
+Invited to serve as reviewer for IEEE GlobeCom 2025.
 
 # 📖 Educations
 
