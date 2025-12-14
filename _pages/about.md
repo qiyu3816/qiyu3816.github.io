@@ -33,7 +33,7 @@ Hello, I am currently a PhD. student in Computer Science at [HCPS Lab](https://h
 
 Bo Yang, *Ruihuai Liang*, Weixin Li, Han Wang, Xuelin Cao, Zhiwen Yu, Samson Lasaulce, Mérouane Debbah, Mohamed-Slim Alouini, H. Vincent Poor, Chau Yuen. "[Frontiers of Generative AI for Network Optimization: Theories, Limits, and Visions](https://arxiv.org/abs/2507.01773)" arXiv preprint arXiv:2507.01773 (2025). (IEEE COMST in revision)
 
-*Ruihuai Liang*, Bo Yang, Pengyu Chen, Xuelin Cao, Zhiwen Yu, H Vincent Poor, Chau Yuen. "[Cross-Problem Solving for Network Optimization: Is Problem-Aware Learning the Key?](https://arxiv.org/abs/2505.05067)" arXiv preprint arXiv:2505.05067 (2025). (Accepted by IEEE JSAC)
+*Ruihuai Liang*, Bo Yang, Pengyu Chen, Xuelin Cao, Zhiwen Yu, H Vincent Poor, Chau Yuen. "[Cross-Problem Solving for Network Optimization: Is Problem-Aware Learning the Key?](https://ieeexplore.ieee.org/document/11298199)," in IEEE Journal on Selected Areas in Communications, doi: 10.1109/JSAC.2025.3642838.
 
 *Ruihuai Liang*, Bo Yang, Pengyu Chen, Xuelin Cao, Zhiwen Yu, Mérouane Debbah, Dusit Niyato, H Vincent Poor, Chau Yuen. "[GDSG: Graph Diffusion-based Solution Generator for Optimization Problems in MEC Networks](https://ieeexplore.ieee.org/abstract/document/11006143)." in **IEEE Transactions on Mobile Computing**, vol. 24, no. 10, pp. 10264-10277, Oct. 2025, doi: 10.1109/TMC.2025.3568248.
 
