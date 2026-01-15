@@ -40,6 +40,10 @@ Bo Yang, *Ruihuai Liang*, Weixin Li, Han Wang, Xuelin Cao, Zhiwen Yu, Samson Las
 
 *Ruihuai Liang*, Bo Yang, Zhiwen Yu, Xuelin Cao, Derrick Wing Kwan Ng, Chau Yuen, "[A Multi-Head Ensemble Multi-Task Learning Approach for Dynamical Computation Offloading](https://ieeexplore.ieee.org/abstract/document/10437346)," **GLOBECOM 2023 - 2023 IEEE Global Communications Conference**, Kuala Lumpur, Malaysia, 2023, pp. 6079-6084.
 
+**Cooperations**:
+
+Yifan Xue, *Ruihuai Liang*, Bo Yang, Xuelin Cao, Zhiwen Yu, Mérouane Debbah, Chau Yuen, "[Joint Task Offloading and Resource Allocation in Low-Altitude MEC via Graph Attention Diffusion](https://arxiv.org/abs/2506.21933)." (Accepted by IEEE Transactions on Cognitive Communications and Networking)
+
 <!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
 
