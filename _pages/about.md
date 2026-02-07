@@ -42,7 +42,7 @@ Bo Yang, *Ruihuai Liang*, Weixin Li, Han Wang, Xuelin Cao, Zhiwen Yu, Samson Las
 
 **Cooperations**:
 
-Yifan Xue, *Ruihuai Liang*, Bo Yang, Xuelin Cao, Zhiwen Yu, Mérouane Debbah, Chau Yuen, "[Joint Task Offloading and Resource Allocation in Low-Altitude MEC via Graph Attention Diffusion](https://ieeexplore.ieee.org/document/11359255)." in **IEEE Transactions on Cognitive Communications and Networking**, doi: 10.1109/TCCN.2026.3656291.
+Yifan Xue, *Ruihuai Liang*, Bo Yang, Xuelin Cao, Zhiwen Yu, Mérouane Debbah, Chau Yuen, "[Joint Task Offloading and Resource Allocation in Low-Altitude MEC via Graph Attention Diffusion](https://ieeexplore.ieee.org/document/11359255)." in **IEEE Transactions on Cognitive Communications and Networking**, vol. 12, pp. 5206-5223, 2026, doi: 10.1109/TCCN.2026.3656291.
 
 <!-- <div class='paper-box'><div class='paper-box-image'><div><div class="badge">CVPR 2016</div><img src='images/500x300.png' alt="sym" width="100%"></div></div>
 <div class='paper-box-text' markdown="1">
